@@ -1,17 +1,24 @@
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
+  --primary-color: #007bff;
+  --form-background: #f8f9fa;
+  --input-border: #ced4da;
 }
 
 [data-theme='dark'] {
   --background-color: #121212;
   --text-color: #ffffff;
+  --form-background: #232323;
+  --input-border: #495057;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: sans-serif;
+  padding: 20px;
 }
 
 #theme-toggle {
@@ -20,4 +27,51 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     cursor: pointer;
+    margin-bottom: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  background-color: var(--form-background);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
 }
