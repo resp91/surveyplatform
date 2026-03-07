@@ -2,31 +2,31 @@
 
 ## Overview
 
-This project is a simple web application with a dark/light mode toggle feature. The goal is to implement this feature and then deploy the application to a GitHub repository.
+This project is a simple web application that serves as a survey platform. It currently includes a partnership inquiry form and a dark/light mode toggle for user convenience.
 
-## Project Outline
+## Features
 
-### Style and Design
-- The project will have a toggle switch to alternate between dark and light themes.
-- **Light Mode:** Dark text on a light background.
-- **Dark Mode:** Light text on a dark background.
-- CSS variables will be used for easily manageable color schemes.
+### Dark/Light Mode Toggle
 
-### Features
-- `index.html`: Main entry point, containing the content and the theme-toggle button.
-- `main.js`: JavaScript file for application logic, including the theme-switching functionality and saving the user's preference in `localStorage`.
-- `style.css`: CSS file for styling, containing styles for both light and dark modes.
+*   **Description:** Allows users to switch between a light and dark theme.
+*   **Implementation:** A button in the UI toggles a `data-theme` attribute on the `<html>` element. CSS variables are used to define colors for each theme. The user's preference is saved in `localStorage`.
 
-## Current Task: Implement Dark/Light Mode and Deploy to GitHub
+### Partnership Inquiry Form
 
-### Plan
-1.  **Implement Theme Toggle:**
-    *   Add a toggle button to `index.html`.
-    *   Define color variables and styles for both themes in `style.css`.
-    *   Write the JavaScript logic in `main.js` to handle theme switching and persist the choice.
-2.  **Deploy to GitHub:**
-    *   Initialize a local Git repository.
-    *   Add the remote GitHub repository (`https://github.com/resp91/surveyplatform`).
-    *   Stage all project files.
-    *   Create an initial commit with the new feature.
-    *   Push the code to the remote repository.
+*   **Description:** A simple form for users to submit partnership inquiries.
+*   **Endpoint:** Submissions are sent to `https://formspree.io/f/mlgpdbpo`.
+*   **Styling:** The form is styled with a modern and responsive design, adapting to both light and dark themes.
+
+## Design
+
+*   **Layout:** A simple, single-page layout with content centered.
+*   **Typography:** Uses the default sans-serif font for readability.
+*   **Color Palette:**
+    *   **Light Mode:** White background with black text.
+    *   **Dark Mode:** Dark grey background with white text.
+    *   **Primary Color:** A shade of blue used for interactive elements like buttons.
+*   **Interactivity:** Buttons have clear visual feedback on hover.
+
+## Current Plan
+
+This section will be updated with the plan for the next set of requested changes.
