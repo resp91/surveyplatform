@@ -1,0 +1,777 @@
+<title>만인지표 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F1F3EE; --surface:#FBFCFA; --surface-2:#E6EAE2; --sunken:#DDE3DA;
+  --ink:#131A16; --ink-2:#3D4A43; --ink-3:#6C7A72;
+  --rule:#C9D1C7; --rule-2:#DDE3DA;
+  --pine:#1C4B3C; --pine-2:#2E6B57; --pine-soft:#E0EAE3;
+  --clay:#9E4526; --teal:#1E6C78; --gold:#8A6A1C;
+  --shadow:0 1px 2px rgba(19,26,22,.06), 0 8px 24px -16px rgba(19,26,22,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1311; --surface:#141C18; --surface-2:#1B2620; --sunken:#101815;
+    --ink:#E7EDE8; --ink-2:#AEBDB4; --ink-3:#7C8C83;
+    --rule:#2A3830; --rule-2:#222E28;
+    --pine:#7FC2A3; --pine-2:#9AD3B9; --pine-soft:#18251F;
+    --clay:#E28A62; --teal:#6FBAC4; --gold:#C6A44E;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1311; --surface:#141C18; --surface-2:#1B2620; --sunken:#101815;
+  --ink:#E7EDE8; --ink-2:#AEBDB4; --ink-3:#7C8C83;
+  --rule:#2A3830; --rule-2:#222E28;
+  --pine:#7FC2A3; --pine-2:#9AD3B9; --pine-soft:#18251F;
+  --clay:#E28A62; --teal:#6FBAC4; --gold:#C6A44E;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-weight:400; font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px 120px}
+.col{max-width:70ch}
+h1,h2,h3,h4{font-family:"Noto Serif KR",serif;text-wrap:balance;line-height:1.28;margin:0}
+p{margin:0}
+a{color:var(--pine);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--pine);outline-offset:3px;border-radius:2px}
+.mono{font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+/* measuring-scale rule motif */
+.tick{height:9px;background:repeating-linear-gradient(90deg,var(--rule) 0 1px,transparent 1px 9px);opacity:.85}
+.tick.major{height:13px;background:
+  repeating-linear-gradient(90deg,var(--pine) 0 1.5px,transparent 1.5px 45px),
+  repeating-linear-gradient(90deg,var(--rule) 0 1px,transparent 1px 9px)}
+
+/* header */
+header.top{padding:72px 0 0}
+h1{font-size:clamp(38px,6.2vw,68px);font-weight:900;letter-spacing:-.02em}
+h1 .sub{display:block;font-size:clamp(15px,2vw,20px);font-weight:500;color:var(--pine);margin-top:14px;letter-spacing:0}
+.lede{font-size:19px;line-height:1.72;color:var(--ink-2);margin-top:26px;max-width:62ch}
+.stamps{display:flex;flex-wrap:wrap;gap:0;margin:34px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.stamp{flex:1 1 150px;padding:16px 18px 15px;border-right:1px solid var(--rule-2)}
+.stamp:last-child{border-right:0}
+.stamp b{display:block;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:26px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.stamp span{display:block;font-size:12px;color:var(--ink-3);margin-top:2px}
+
+/* nav chips */
+nav.jump{display:flex;flex-wrap:wrap;gap:6px;margin:26px 0 0}
+nav.jump a{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.04em;text-decoration:none;color:var(--ink-2);
+  border:1px solid var(--rule);border-radius:2px;padding:5px 9px;background:var(--surface);transition:.15s}
+nav.jump a:hover{border-color:var(--pine);color:var(--pine);background:var(--pine-soft)}
+
+section{margin-top:76px}
+h2{font-size:clamp(24px,3.4vw,33px);font-weight:700;letter-spacing:-.01em}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;color:var(--pine);display:block;margin-bottom:9px;letter-spacing:.14em}
+.sec-intro{margin-top:16px;color:var(--ink-2)}
+h3{font-size:21px;font-weight:700;margin-top:0}
+h4{font-family:"IBM Plex Sans KR",sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
+
+.stack{display:flex;flex-direction:column;gap:18px}
+.stack-l{display:flex;flex-direction:column;gap:34px}
+
+/* principle list */
+ol.pr{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:1px;background:var(--rule-2);border:1px solid var(--rule-2)}
+ol.pr li{background:var(--surface);padding:20px 22px;display:grid;grid-template-columns:34px 1fr;gap:14px}
+ol.pr .k{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--pine);font-weight:600;padding-top:4px}
+ol.pr b{display:block;font-family:"Noto Serif KR",serif;font-size:17px;font-weight:700;margin-bottom:5px}
+ol.pr p{color:var(--ink-2);font-size:15px}
+
+/* tables */
+.tw{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{background:var(--surface-2);font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.code{font-family:"IBM Plex Mono",monospace;color:var(--pine);font-weight:500;white-space:nowrap}
+caption{caption-side:bottom;text-align:left;font-size:12.5px;color:var(--ink-3);padding:10px 14px;border-top:1px solid var(--rule-2)}
+
+/* index spec cards */
+.idx{background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);scroll-margin-top:20px}
+.idx > .tick{border-bottom:1px solid var(--rule)}
+.idx-body{padding:26px 28px 30px;display:grid;grid-template-columns:78px 1fr;gap:0 26px}
+.rail{border-right:1px solid var(--rule-2);padding-right:18px}
+.rail .num{font-family:"IBM Plex Mono",monospace;font-size:31px;font-weight:500;color:var(--pine);line-height:1;letter-spacing:-.03em}
+.rail .code{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--ink-3);margin-top:9px}
+.rail .cyc{display:block;margin-top:14px;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--pine);border:1px solid var(--pine);border-radius:2px;padding:3px 6px;text-align:center;background:var(--pine-soft)}
+.idx-main{min-width:0}
+.idx-main > h3 + .en{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);margin-top:5px}
+dl.spec{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 0;border:1px solid var(--rule-2);background:var(--sunken)}
+dl.spec > div{flex:1 1 96px;padding:9px 12px;border-right:1px solid var(--rule-2)}
+dl.spec > div:last-child{border-right:0}
+dl.spec dt{font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);margin:0}
+dl.spec dd{margin:2px 0 0;font-family:"IBM Plex Mono",monospace;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.blk{margin-top:22px}
+.blk p{font-size:15px;color:var(--ink-2)}
+.gapnote{border-left:2px solid var(--clay);padding-left:14px}
+.gapnote p{color:var(--ink)}
+.buyers{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.buyers span{font-size:12px;border:1px solid var(--rule);border-radius:2px;padding:3px 8px;color:var(--ink-2);background:var(--surface-2)}
+.formula{font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.7;background:var(--sunken);border:1px solid var(--rule-2);padding:13px 15px;color:var(--ink-2);overflow-x:auto}
+ol.q{list-style:none;counter-reset:q;padding:0;margin:10px 0 0;display:grid;gap:1px;background:var(--rule-2);border:1px solid var(--rule-2)}
+ol.q li{background:var(--surface);padding:13px 16px;counter-increment:q}
+ol.q li::before{content:"Q" counter(q);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--pine);font-weight:600;display:block;margin-bottom:4px;letter-spacing:.06em}
+ol.q .qt{font-size:15px;font-weight:500;color:var(--ink);display:block}
+ol.q .qo{display:block;margin-top:6px;font-size:13.5px;color:var(--ink-2);line-height:1.72}
+ol.q .qn{display:block;margin-top:6px;font-size:12.5px;color:var(--gold);font-weight:500}
+.hl{margin-top:20px;border-top:1px solid var(--rule);padding-top:16px}
+.hl .lab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+.hl q{display:block;font-family:"Noto Serif KR",serif;font-size:18px;font-weight:700;line-height:1.5;margin-top:7px;color:var(--ink)}
+.hl q::before,.hl q::after{color:var(--pine)}
+
+.callout{border:1px solid var(--rule);border-left:3px solid var(--pine);background:var(--surface);padding:20px 24px;margin-top:24px}
+.callout h4{color:var(--pine)}
+.callout p{color:var(--ink-2);font-size:15px}
+.warn{border-left-color:var(--clay)}
+.warn h4{color:var(--clay)}
+ul.plain{margin:10px 0 0;padding-left:19px;color:var(--ink-2);font-size:15px}
+ul.plain li{margin-bottom:7px}
+ul.plain b{color:var(--ink);font-weight:600}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;margin-top:24px}
+.card{background:var(--surface);border:1px solid var(--rule);padding:20px 22px}
+.card h4{margin-bottom:9px}
+.card p{font-size:14.5px;color:var(--ink-2)}
+footer{margin-top:88px;border-top:1px solid var(--rule);padding-top:26px;font-size:13px;color:var(--ink-3)}
+footer h4{margin-bottom:10px}
+footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--pine);border-color:var(--pine)}
+footer ol{padding-left:18px;margin:0;line-height:1.85}
+@media (max-width:640px){
+  .idx-body{grid-template-columns:1fr;gap:0}
+  .rail{border-right:0;border-bottom:1px solid var(--rule-2);padding:0 0 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .rail .code,.rail .cyc{margin-top:0}
+  .rail .cyc{margin-left:auto}
+  .wrap{padding:0 16px 80px}
+  body{font-size:15.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">전국 1만인 패널 · 정기 지표 설계안 · 2026</p>
+  <h1>만인지표 10<span class="sub">공식 통계가 구조적으로 낼 수 없는 열 개의 숫자, 그리고 그것을 만드는 문항</span></h1>
+  <p class="lede">인구비례 1만 명은 &ldquo;큰 설문&rdquo;이 아니라 <b>매달 쓸 수 있는 예산</b>이다. 이 문서는 그 예산을 어떻게 쪼개면 단발성 보도자료가 아니라 <b>업권이 발표일을 기다리는 시계열 지표</b>가 되는지를, 산식과 문항 단위까지 확정한 설계안이다.</p>
+  <div class="stamps">
+    <div class="stamp"><b>10,000</b><span>웨이브당 표본</span></div>
+    <div class="stamp"><b>±0.98%p</b><span>95% 신뢰수준 최대허용오차</span></div>
+    <div class="stamp"><b>12</b><span>연간 웨이브</span></div>
+    <div class="stamp"><b>10</b><span>지표</span></div>
+    <div class="stamp"><b>110</b><span>총 설계 문항</span></div>
+  </div>
+  <nav class="jump">
+    <a href="#why">설계 원칙</a><a href="#arch">웨이브 구조</a><a href="#precision">정확도</a>
+    <a href="#cfa">01 CFA</a><a href="#kqi">02 KQI</a><a href="#awp">03 AWP</a><a href="#pri">04 PRI</a><a href="#ari">05 ARI</a>
+    <a href="#hmi">06 HMI</a><a href="#ldi">07 LDI</a><a href="#dvi">08 DVI</a><a href="#hai">09 HAI</a><a href="#kti">10 KTI</a>
+    <a href="#cal">발표 캘린더</a><a href="#trust">신뢰 규약</a><a href="#road">실행 로드맵</a>
+  </nav>
+</header>
+
+<section id="why">
+  <h2><span class="n">01 &mdash; 전제</span>왜 대부분의 &lsquo;1만 명 조사&rsquo;는 하루 만에 잊히는가</h2>
+  <div class="col sec-intro stack">
+    <p>표본이 커서 화제가 되는 게 아니다. 미시간대 소비자심리지수는 매달 전화 <span class="mono">500</span>건으로 만들어지는데도 미 상무부 경기선행지수에 편입돼 있고, 채권·주식이 발표 시각에 반응한다. 규모가 아니라 <b>반복·산식·발표 규율</b>이 지표를 만든다.</p>
+    <p>반대로 국내에서 매년 쏟아지는 &lsquo;1만 명 설문&rsquo; 대부분은 한 번 기사화되고 끝난다. 시계열이 없고, 헤드라인이 단일 문항의 백분율이며, 다음 발표일이 정해져 있지 않기 때문이다. 아래 여섯 가지가 이 설계안 전체를 관통하는 규칙이다.</p>
+  </div>
+  <ol class="pr">
+    <li><span class="k">R1</span><div><b>공식 통계가 구조적으로 못 내는 칸만 판다</b><p>정부 통계는 &lsquo;사실&rsquo;과 &lsquo;사후&rsquo;에 강하고 &lsquo;의향&rsquo;과 &lsquo;암수(暗數)&rsquo;에 약하다. 가계금융복지조사는 연 1회에 자산 기준일이 조사 당해 3월, 소득은 전년도다. 사업체노동력조사의 이직률은 사업체가 답한 실현치이지 근로자의 의향이 아니다. 전국범죄피해조사는 격년이고 온라인 사기 신고율은 27% 수준이다. 이 세 종류의 빈칸&mdash;<b>시차·관점·암수</b>&mdash;이 우리가 독점할 수 있는 영역이다.</p></div></li>
+    <li><span class="k">R2</span><div><b>백분율이 아니라 지수로 말한다</b><p>&ldquo;38.2%가 그렇다고 답했다&rdquo;는 1회용이고, &ldquo;지수 87.4, 전월 대비 &minus;3.1p&rdquo;는 매달 인용된다. 모든 지표는 한국은행 CSI와 같은 <b>100 중립·0~200 범위</b>로 통일한다. 이미 언론과 시장이 &lsquo;100 아래면 비관&rsquo;이라는 문법을 학습했으므로 해설 비용이 0이다.</p></div></li>
+    <li><span class="k">R3</span><div><b>1만 명의 진짜 자산은 전국 수치가 아니라 &lsquo;쪼갤 수 있음&rsquo;이다</b><p>전국 결과만 낼 거면 2,500명이면 족하다. 1만 명이어야만 가능한 것은 <b>17개 시도 &times; 소득 5분위 &times; 세대</b>의 교차 분해다. 한국은행 CCSI는 2,500가구라 시도별 심리를 못 낸다. 저출산고령사회위원회 인식조사는 2,500명이라 시도별 출산의향을 못 낸다. 우리는 낼 수 있다. 이것이 유일한 구조적 해자다.</p></div></li>
+    <li><span class="k">R4</span><div><b>선행성이 있어야 기다린다</b><p>후행 지표는 확인용이라 아무도 기다리지 않는다. 열 개 지표 모두 &lsquo;향후 3&sim;6개월 내 행동 의향&rsquo;을 핵심 축으로 둔다. 연체율보다 <b>연체 직전 행동</b>이, 이직률보다 <b>이직 의향</b>이, 출생아 수보다 <b>출산 의향</b>이 앞선다.</p></div></li>
+    <li><span class="k">R5</span><div><b>센세이션은 주제가 아니라 &lsquo;격차&rsquo;에서 나온다</b><p>자극적인 문항은 신뢰를 태워 조회수를 산다. 대신 같은 문항을 집단별로 쪼갤 때 나오는 격차&mdash;&ldquo;이상 자녀 수와 예상 자녀 수의 차이&rdquo;, &ldquo;피해자 100명 중 신고한 사람 수&rdquo;, &ldquo;회사 몰래 AI를 쓰는 비율&rdquo;&mdash;가 훨씬 세고, 인용될수록 권위가 쌓인다.</p></div></li>
+    <li><span class="k">R6</span><div><b>발표일을 고정하고 절대 어기지 않는다</b><p>시장 지표의 최소 조건은 &lsquo;다음 숫자가 언제 나오는지&rsquo;가 1년 전부터 확정돼 있는 것이다. 캘린더를 먼저 공표하고, 결과가 나쁘거나 밋밋해도 그대로 낸다. 한 번 건너뛰면 지표가 아니라 마케팅으로 강등된다.</p></div></li>
+  </ol>
+</section>
+
+<section id="arch">
+  <h2><span class="n">02 &mdash; 구조</span>1만 명을 매달 어떻게 쪼개는가</h2>
+  <div class="col sec-intro stack">
+    <p>열 개 지표를 각각 1만 명씩 돌리면 연 10만 명이 아니라 연 <span class="mono">120,000</span>건의 응답이 필요해 예산이 무너진다. 해법은 하나의 월간 웨이브를 <b>전수 코어</b>와 <b>분할 모듈</b>로 나누는 것이다.</p>
+    <p><b>전수 코어(10,000명 · 15문항)</b>는 매달 같은 문항을 전원에게 물어 월간 지표 네 개의 헤드라인을 만든다. 오차 &plusmn;0.98%p, 시도별 분해 가능. <b>모듈(5,000명 &times; 2분할 · 각 10문항)</b>에는 그달의 심층·분기·반기 지표를 얹는다. 오차 &plusmn;1.39%p로 여전히 충분하고, 응답자 1인의 부담은 배경 5문항을 포함해 <b>30문항 · 9&sim;11분</b>을 넘지 않는다.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>모듈 배치 원칙 &mdash; 월간 3종은 매달 전수, 분기·반기·연간 7종은 모듈 슬롯을 회전 점유한다.</caption>
+      <thead><tr><th>층</th><th class="num">표본</th><th class="num">문항</th><th class="num">오차(95%)</th><th>담는 지표</th><th>분해 가능 단위</th></tr></thead>
+      <tbody>
+        <tr><td><b>배경</b></td><td class="num">10,000</td><td class="num">5</td><td class="num">&mdash;</td><td>성·연령·시도·가구·소득 5분위·직업</td><td>가중치 산출 기준</td></tr>
+        <tr><td><b>전수 코어</b></td><td class="num">10,000</td><td class="num">15</td><td class="num">&plusmn;0.98%p</td><td class="code">CFA · KQI · PRI · ARI</td><td>17개 시도 &times; 세대 &times; 소득분위</td></tr>
+        <tr><td><b>모듈 A</b></td><td class="num">5,000</td><td class="num">10</td><td class="num">&plusmn;1.39%p</td><td class="code">AWP · HMI · HAI</td><td>7개 권역 &times; 세대 &times; 직군</td></tr>
+        <tr><td><b>모듈 B</b></td><td class="num">5,000</td><td class="num">10</td><td class="num">&plusmn;1.39%p</td><td class="code">DVI · 월간 심층</td><td>7개 권역 &times; 세대 &times; 혼인상태</td></tr>
+        <tr><td><b>연간 전수</b></td><td class="num">10,000</td><td class="num">15</td><td class="num">&plusmn;0.98%p</td><td class="code">KTI · LDI</td><td>17개 시도 &times; 16개 업권</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <h4>누적 설계 &mdash; 분기마다 표본이 3배가 된다</h4>
+    <p>전수 코어는 문항이 고정이므로 3개월을 합치면 <span class="mono">n=30,000</span>이 된다. 이때 세종(월 70명)도 <span class="mono">210명</span>이 되어 분기 단위로는 17개 시도 전체를 공표할 수 있다. <b>월간은 7개 권역, 분기는 17개 시도</b>&mdash;이 이원 공표가 지자체·유통·건설 수요를 통째로 가져온다.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>월간 시도 배분(예시, 만 19&sim;69세 인구비례). 월간 공표는 권역 단위, 시도 단위는 3개월 누적으로 분기 공표.</caption>
+      <thead><tr><th>시도</th><th class="num">월 배분</th><th class="num">월 오차</th><th class="num">분기 누적</th><th class="num">분기 오차</th></tr></thead>
+      <tbody>
+        <tr><td>경기</td><td class="num">2,650</td><td class="num">&plusmn;1.9%p</td><td class="num">7,950</td><td class="num">&plusmn;1.1%p</td></tr>
+        <tr><td>서울</td><td class="num">1,820</td><td class="num">&plusmn;2.3%p</td><td class="num">5,460</td><td class="num">&plusmn;1.3%p</td></tr>
+        <tr><td>부산</td><td class="num">620</td><td class="num">&plusmn;3.9%p</td><td class="num">1,860</td><td class="num">&plusmn;2.3%p</td></tr>
+        <tr><td>인천</td><td class="num">590</td><td class="num">&plusmn;4.0%p</td><td class="num">1,770</td><td class="num">&plusmn;2.3%p</td></tr>
+        <tr><td>대구·광주·대전·울산 등</td><td class="num">210&ndash;450</td><td class="num">&plusmn;4.6&ndash;6.8%p</td><td class="num">630&ndash;1,350</td><td class="num">&plusmn;2.7&ndash;3.9%p</td></tr>
+        <tr><td>제주</td><td class="num">130</td><td class="num">&plusmn;8.6%p</td><td class="num">390</td><td class="num">&plusmn;5.0%p</td></tr>
+        <tr><td>세종</td><td class="num">70</td><td class="num">&plusmn;11.7%p</td><td class="num">210</td><td class="num">&plusmn;6.8%p</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="precision">
+  <h2><span class="n">03 &mdash; 정확도</span>표본이 크다고 대표성이 생기지는 않는다</h2>
+  <div class="col sec-intro stack">
+    <p>온라인 패널은 인터넷 이용자로 모집단이 제한되는 포함오차와, 조사에 응할 의사가 있는 사람만 참여하는 자발성 편향을 구조적으로 안고 있다. 표본을 1만 명으로 키워도 이 편향은 줄지 않는다&mdash;오차범위만 줄어들 뿐이다. 그래서 <b>보정 절차를 지표 산식의 일부로 공개</b>해야 한다.</p>
+  </div>
+  <div class="grid2">
+    <div class="card"><h4>1. 셀 할당</h4><p>성(2) &times; 연령 10세 구간(5) &times; 권역(7) = <span class="mono">70셀</span>을 주민등록인구 비율로 사전 할당하고, 셀별 목표의 &plusmn;10% 이내로 마감한다. 미달 셀은 마감을 늦추더라도 대체하지 않는다.</p></div>
+    <div class="card"><h4>2. 레이킹 보정</h4><p>셀 사후층화 후 교육수준·직업·가구원수·주택점유형태 4개 주변분포에 대해 반복비례적합(raking)을 적용한다. 미국 퓨리서치를 포함한 다수 조사기관의 표준이며, 극단 가중치는 <span class="mono">0.3&ndash;3.0</span>으로 절단한다.</p></div>
+    <div class="card"><h4>3. 유효표본 공표</h4><p>가중치는 분산을 키운다. 명목 <span class="mono">n=10,000</span>과 함께 설계효과(deff)와 <b>유효표본크기</b>를 매 발표에 병기한다. deff 1.4면 유효표본은 7,140명, 실질 오차는 &plusmn;1.16%p다. 이 숫자를 스스로 공개하는 조사기관은 드물고, 그래서 이것 자체가 차별화다.</p></div>
+    <div class="card"><h4>4. 외부 검증 앵커</h4><p>매 웨이브에 <b>이미 정답이 있는 문항</b> 3개를 심는다&mdash;향후 1년 기대인플레이션(한국은행 대비), 자가 점유율(인구주택총조사 대비), 1인가구 비율(주민등록 대비). 우리 값이 공식치와 얼마나 벌어지는지를 매번 함께 공개하면, 편향을 숨기지 않는 조사라는 평판이 쌓인다.</p></div>
+  </div>
+</section>
+
+<section id="indices">
+  <h2><span class="n">04 &mdash; 지표</span>열 개의 지수와 그 문항</h2>
+  <div class="col sec-intro stack">
+    <p>번호는 우선순위이자 출시 순서다. <span class="mono">01&ndash;03</span>이 먼저 6개월 시계열을 쌓고, 그 신뢰를 담보로 나머지가 순차 진입한다. 각 지표의 산식은 한국은행 CSI 방식으로 통일한다.</p>
+    <div class="formula">지수 = { (매우 그렇다&times;1.0) + (다소 그렇다&times;0.5) &minus; (다소 아니다&times;0.5) &minus; (매우 아니다&times;1.0) } &divide; 전체응답자수 &times; 100 + 100<br>→ 범위 0&ndash;200, 중립 100. 복수 하위문항은 단순평균이 아니라 <b>첫 24개월 표준화 후 동일가중 합성</b>.</div>
+  </div>
+</section>
+
+<div class="stack-l" style="margin-top:34px">
+
+<article class="idx" id="cfa">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">01</span><span class="code">CFA</span><span class="cyc">월간</span></div>
+    <div class="idx-main">
+      <h3>가계 현금흐름 경보지수</h3>
+      <p class="en">Household Cash-Flow Alarm Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>월간</dd></div>
+        <div><dt>표본</dt><dd>10,000</dd></div>
+        <div><dt>문항</dt><dd>9</dd></div>
+        <div><dt>발표</dt><dd>말일 직전 목 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;0.98%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>연체율은 은행·여신전문사 데이터로 확인되지만 <b>실제 사건이 벌어진 뒤 2&ndash;3개월 후행</b>한다. 한국은행 소비자동향조사는 &lsquo;심리&rsquo;를 묻지 <b>연체 직전의 행동</b>&mdash;리볼빙 전환, 보험 해지, 적금 중도해지, 가족 차입&mdash;을 묻지 않는다. 이 행동들은 연체보다 한 분기 앞서 움직이는데, 이를 인구대표 표본으로 매달 재는 통계가 국내에 존재하지 않는다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>은행 리스크관리</span><span>카드·캐피탈</span><span>저축은행·대부</span><span>금융당국</span><span>회사채·ABS 시장</span><span>유통·외식</span><span>채권추심</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">CFA = 100 &minus; (Q1 위험행동 경험률 지수 &times; 0.3 + Q2 비상자금 조달불가 지수 &times; 0.2<br>&nbsp;&nbsp;&nbsp;&nbsp;+ Q3 유동성 완충 부족 지수 &times; 0.2 + Q4 상환곤란 전망 지수 &times; 0.3)<br>하락할수록 경보. 100 = 기준시점(첫 12개월 평균).</div></div>
+      <div class="blk"><h4>문항 9개</h4>
+      <ol class="q">
+        <li><span class="qt">지난 30일 동안 다음 중 경험한 것을 모두 골라주세요.</span><span class="qo">① 카드값·공과금 납부일을 미루거나 나눠 냄 ② 카드 리볼빙·현금서비스 이용 ③ 마이너스통장 한도를 거의 다 씀 ④ 보험 해지 또는 약관대출 ⑤ 가족·지인에게 돈을 빌림 ⑥ 예·적금 중도 해지 ⑦ 대출 원리금 1일 이상 연체 ⑧ 물건을 팔아 생활비 마련 ⑨ 해당 없음</span><span class="qn">복수응답 · ⑨는 배타. 지수의 최대 가중(0.3) 문항</span></li>
+        <li><span class="qt">이번 달 예상치 못한 100만 원 지출이 생긴다면 어떻게 마련하시겠습니까?</span><span class="qo">① 예금·현금으로 바로 가능 ② 신용카드 할부 ③ 신용대출·현금서비스 ④ 가족·지인 ⑤ 물건 판매·중고거래 ⑥ 마련할 방법이 없다</span><span class="qn">단일응답 · ⑤⑥ 합계가 &lsquo;조달불가&rsquo;. 미 연준 SHED와 비교 가능한 국제 표준형 문항</span></li>
+        <li><span class="qt">소득이 갑자기 끊긴다면 지금 가진 돈으로 생활비를 얼마나 버틸 수 있습니까?</span><span class="qo">① 6개월 이상 ② 3&ndash;6개월 ③ 1&ndash;3개월 ④ 1개월 미만 ⑤ 전혀 없다</span><span class="qn">단일응답</span></li>
+        <li><span class="qt">향후 3개월 안에 대출 원리금 상환이 어려워질 가능성은 어느 정도라고 보십니까?</span><span class="qo">① 매우 높다 ② 다소 높다 ③ 반반이다 ④ 다소 낮다 ⑤ 매우 낮다 ⑥ 대출이 없다</span><span class="qn">단일응답 · ⑥ 제외 후 CSI 산식 적용</span></li>
+        <li><span class="qt">3개월 전과 비교해 고정지출(주거비·통신·보험·구독료) 부담은 어떻습니까?</span><span class="qo">① 크게 늘었다 ② 다소 늘었다 ③ 비슷하다 ④ 다소 줄었다 ⑤ 크게 줄었다</span></li>
+        <li><span class="qt">최근 3개월 안에 돈 때문에 끊었거나 줄인 항목을 모두 골라주세요.</span><span class="qo">① 외식·배달 ② 구독 서비스 ③ 보험료 ④ 통신 요금제 ⑤ 자녀 교육·학원 ⑥ 병원·건강검진 ⑦ 경조사비 ⑧ 여행·여가 ⑨ 난방·냉방 ⑩ 줄인 것 없다</span><span class="qn">복수응답 · ⑥ 응답률은 별도로 &lsquo;의료 포기율&rsquo;로 공표</span></li>
+        <li><span class="qt">앞으로 6개월 뒤 우리 가구의 재무 상태는 지금과 비교해 어떨 것 같습니까?</span><span class="qo">① 매우 좋아진다 ② 다소 좋아진다 ③ 비슷하다 ④ 다소 나빠진다 ⑤ 매우 나빠진다</span></li>
+        <li><span class="qt">현재 월 소득에서 대출 원리금 상환이 차지하는 비중은 얼마입니까?</span><span class="qo">① 대출 없음 ② 10% 미만 ③ 10&ndash;20% ④ 20&ndash;30% ⑤ 30&ndash;40% ⑥ 40% 이상 ⑦ 모르겠다</span><span class="qn">체감 DSR. 금융권 실측 DSR과의 괴리 자체가 별도 콘텐츠</span></li>
+        <li><span class="qt">지금 우리 가계에 가장 큰 압박을 주는 것 한 가지만 골라주세요.</span><span class="qo">① 대출 이자 ② 주거비(월세·관리비) ③ 식료품·외식비 ④ 자녀 교육비 ⑤ 의료·간병비 ⑥ 소득 감소·실직 ⑦ 사업 부진 ⑧ 부모 부양 ⑨ 기타</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>가계 현금흐름 경보지수 87.4 &mdash; 석 달 연속 하락, 40대 자영업 78.1로 최저</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="kqi">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">02</span><span class="code">KQI</span><span class="cyc">월간</span></div>
+    <div class="idx-main">
+      <h3>이직 의향 지수</h3>
+      <p class="en">Korea Quit Intent Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>월간</dd></div>
+        <div><dt>표본</dt><dd>6,300(취업자)</dd></div>
+        <div><dt>문항</dt><dd>8</dd></div>
+        <div><dt>발표</dt><dd>매월 첫째 화 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;1.23%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>미국에서 임금 인플레이션의 최고 선행지표로 읽히는 것은 실업률이 아니라 <b>JOLTS 자발적 이직률(quits)</b>이다. 노동자가 &lsquo;나가도 더 좋은 데 갈 수 있다&rsquo;고 믿을 때만 올라가기 때문이다. 한국의 사업체노동력조사도 월간 입·이직률을 내지만 <b>사업체가 답한 실현치</b>이고, 근로자 본인의 <b>의향과 노동시장 자신감</b>을 재는 국가통계는 없다. 이 지표는 한국판 quits를 의향 단계에서 3&ndash;6개월 앞서 잡는다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>한국은행(임금·물가)</span><span>기업 HR·보상</span><span>채용 플랫폼</span><span>헤드헌팅</span><span>증권 리서치</span><span>고용노동부</span><span>노동조합</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">KQI = (Q2 이직의향 지수 &times; 0.4) + (Q3 재취업 자신감 지수 &times; 0.4) + (Q5 임금인상 기대 지수 &times; 0.2)<br>보조지표: 고용충격 노출률(Q4 ①&ndash;⑤ 중 1개 이상) · N잡 참여율(Q7)</div></div>
+      <div class="blk"><h4>문항 8개</h4>
+      <ol class="q">
+        <li><span class="qt">현재 일하시는 형태는 무엇입니까?</span><span class="qo">① 정규직 임금근로 ② 계약·기간제 임금근로 ③ 자영업(직원 있음) ④ 자영업(1인) ⑤ 프리랜서·플랫폼 종사 ⑥ 구직 중 ⑦ 일하지 않음(비경제활동)</span><span class="qn">⑥⑦은 Q3·Q8만 응답 후 종료</span></li>
+        <li><span class="qt">앞으로 6개월 안에 직장을 옮기거나(자영업은 업종 전환·폐업할) 계획이 있습니까?</span><span class="qo">① 이미 지원·면접을 진행 중이다 ② 계획이 매우 있다 ③ 다소 있다 ④ 별로 없다 ⑤ 전혀 없다</span><span class="qn">지수 핵심 축(가중 0.4)</span></li>
+        <li><span class="qt">지금 그만둔다면 3개월 안에 지금과 비슷한 조건의 일자리를 구할 수 있다고 보십니까?</span><span class="qo">① 매우 그렇다 ② 다소 그렇다 ③ 반반이다 ④ 별로 아니다 ⑤ 전혀 아니다</span><span class="qn">노동시장 자신감. quits의 실제 동인이며, 실업률보다 먼저 꺾인다</span></li>
+        <li><span class="qt">최근 3개월 동안 직장(사업장)에서 다음을 겪거나 들은 적이 있습니까?</span><span class="qo">① 권고사직·해고 통보 ② 무급휴직·근로시간 단축 ③ 임금 체불·지급 지연 ④ 팀·부서 축소나 통폐합 ⑤ 신규 채용 중단 공지 ⑥ 성과급·상여 축소 ⑦ 해당 없음</span><span class="qn">복수응답 · &lsquo;고용충격 노출률&rsquo;로 별도 공표. 사업체 조사보다 빠르게 감원 사이클을 포착</span></li>
+        <li><span class="qt">올해 본인의 임금(자영업은 사업소득) 인상률은 어느 정도가 될 것 같습니까?</span><span class="qo">① 10% 이상 인상 ② 5&ndash;10% ③ 3&ndash;5% ④ 0&ndash;3% ⑤ 동결 ⑥ 삭감</span><span class="qn">한국은행 기대인플레이션과 교차하면 &lsquo;실질임금 기대&rsquo;가 산출된다</span></li>
+        <li><span class="qt">(Q2 ①&ndash;③ 응답자) 옮기려는 가장 큰 이유는 무엇입니까?</span><span class="qo">① 임금·보상 ② 고용 불안 ③ 과중한 업무량 ④ 상사·조직문화 ⑤ 성장이 멈춘 느낌 ⑥ 통근·근무지 ⑦ 돌봄·건강 ⑧ AI·자동화로 내 일이 줄어서 ⑨ 창업·독립</span><span class="qn">⑧의 시계열이 곧 &lsquo;AI발 이직&rsquo;의 최초 국내 시계열이 된다</span></li>
+        <li><span class="qt">본업 외에 수입을 얻는 활동(N잡)을 하고 있습니까? 월 평균 수입 기준으로 답해 주세요.</span><span class="qo">① 하지 않는다 ② 월 50만 원 미만 ③ 50&ndash;100만 원 ④ 100&ndash;200만 원 ⑤ 200만 원 이상</span><span class="qn">플랫폼종사자 실태조사는 연 1회·플랫폼 한정. 전체 취업자 기준 N잡률 월간 시계열은 여기서만 나온다</span></li>
+        <li><span class="qt">앞으로 1년 안에 지금 하는 일자리가 없어질 가능성은 어느 정도라고 보십니까?</span><span class="qo">① 매우 높다 ② 다소 높다 ③ 반반이다 ④ 다소 낮다 ⑤ 매우 낮다</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>&ldquo;그만둬도 갈 데 있다&rdquo; 34.1% &mdash; 이직 의향 지수 3년래 최저, 임금 인상 기대도 동반 하락</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="awp">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">03</span><span class="code">AWP</span><span class="cyc">분기</span></div>
+    <div class="idx-main">
+      <h3>AI 업무침투 지수</h3>
+      <p class="en">AI Work Penetration Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>분기(2·5·8·11월)</dd></div>
+        <div><dt>표본</dt><dd>5,000(취업자)</dd></div>
+        <div><dt>문항</dt><dd>12</dd></div>
+        <div><dt>발표</dt><dd>해당 월 둘째 수 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;1.39%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>국내 AI 조사는 두 갈래뿐이다. 대한상의·KISDI·NIA류의 <b>기업·경영진 대상 도입률</b>과, 앤스로픽 이코노믹 인덱스처럼 <b>자사 서비스 로그</b>에서 추출한 사용 패턴. 전자는 &lsquo;회사가 도입했다&rsquo;를 재지 &lsquo;직원이 실제로 몇 시간 쓰는가&rsquo;를 재지 못하고, 후자는 그 서비스 이용자만 본다는 자기선택 편향이 원리적으로 남는다. 취업자 인구를 대표하는 표본으로 <b>업무시간 기준 침투율</b>과 <b>회사 몰래 쓰는 비율</b>을 재는 통계는 세계적으로도 드물다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>SI·SaaS</span><span>클라우드·통신</span><span>HR·교육기업</span><span>증권 리서치</span><span>보안업계</span><span>과기정통부·고용부</span><span>대학·연구소</span><span>해외 미디어</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">AWP = 취업자 중 &lsquo;주 1회 이상 업무에 AI 사용&rsquo; 비율 &times; 평균 업무시간 침투율(Q2 구간 중앙값)<br>동시 공표: 그림자사용률(Q5 ②) · 유료전환율(Q6 ②&ndash;⑤) · 직무 대체 예상치(Q9 평균)</div></div>
+      <div class="blk"><h4>문항 12개</h4>
+      <ol class="q">
+        <li><span class="qt">지난 한 주 동안 업무에 AI 도구(챗봇·코파일럿·AI 검색 등)를 사용한 날은 며칠입니까?</span><span class="qo">① 0일 ② 1&ndash;2일 ③ 3&ndash;4일 ④ 5일 이상</span></li>
+        <li><span class="qt">지난 한 주 전체 업무 시간 중 AI를 함께 쓴 시간은 대략 몇 %입니까?</span><span class="qo">① 0% ② 1&ndash;10% ③ 11&ndash;25% ④ 26&ndash;50% ⑤ 51&ndash;75% ⑥ 76% 이상</span><span class="qn">지수의 강도 축. 이용률(넓이) &times; 시간비중(깊이)이 핵심</span></li>
+        <li><span class="qt">AI에게 시킨 일은 어떤 종류였습니까?</span><span class="qo">① 글 초안 작성 ② 요약·번역 ③ 자료 조사 ④ 코드 작성·디버깅 ⑤ 데이터 분석·표 만들기 ⑥ 이미지·영상 제작 ⑦ 고객 응대 ⑧ 일정·문서 정리 ⑨ 의사결정 조언</span><span class="qn">복수응답 · 직무별 교차로 &lsquo;직군별 침투 지도&rsquo; 산출</span></li>
+        <li><span class="qt">그 일을 AI 없이 했다면 걸렸을 시간과 비교하면 어떻습니까?</span><span class="qo">① 절반 이하로 줄었다 ② 60&ndash;80% 수준 ③ 비슷하다 ④ 오히려 더 걸린다</span><span class="qn">체감 생산성. ④의 비율이 &lsquo;AI 세금&rsquo; 논쟁의 근거가 된다</span></li>
+        <li><span class="qt">지금 쓰는 AI 도구는 회사가 공식 도입한 것입니까?</span><span class="qo">① 회사가 제공·승인한 도구 ② 회사는 모르고 개인 계정으로 쓴다 ③ 회사가 금지했지만 쓴다 ④ 규정 자체가 없다</span><span class="qn">②+③ = 그림자 AI 사용률. 보안·컴플라이언스 업계가 가장 목말라하는 단 하나의 숫자</span></li>
+        <li><span class="qt">본인 돈으로 AI 서비스에 매달 지출하는 금액은 얼마입니까?</span><span class="qo">① 0원 ② 1&ndash;2만 원 ③ 2&ndash;4만 원 ④ 4&ndash;10만 원 ⑤ 10만 원 이상</span><span class="qn">가계의 신규 고정지출 항목으로서 CFA·PRI와 교차 분석</span></li>
+        <li><span class="qt">AI 도입 이후 우리 팀 인원은 어떻게 됐습니까?</span><span class="qo">① 늘었다 ② 그대로다 ③ 빈자리를 안 채운다 ④ 줄었다 ⑤ 잘 모르겠다</span></li>
+        <li><span class="qt">우리 회사의 신입·주니어 채용 규모는 체감상 어떻습니까?</span><span class="qo">① 늘었다 ② 그대로다 ③ 줄었다 ④ 사실상 뽑지 않는다 ⑤ 모르겠다</span><span class="qn">&lsquo;AI가 사다리를 걷어찼는가&rsquo;에 대한 최초의 정기 국내 데이터</span></li>
+        <li><span class="qt">지금 하시는 일 가운데 5년 안에 AI가 대신할 수 있는 부분은 몇 %라고 보십니까?</span><span class="qo">0&ndash;100% 중 10% 단위 선택</span><span class="qn">직무 코드와 결합해 직업별 자기평가 노출도 산출</span></li>
+        <li><span class="qt">(미사용자) AI를 쓰지 않는 가장 큰 이유는 무엇입니까?</span><span class="qo">① 내 일에 필요 없다 ② 보안·회사 규정 ③ 결과를 믿을 수 없다 ④ 배울 시간이 없다 ⑤ 비용 부담 ⑥ 어떻게 쓰는지 모른다</span></li>
+        <li><span class="qt">AI가 만든 결과의 오류 때문에 업무상 문제가 생긴 적이 있습니까?</span><span class="qo">① 있다 &mdash; 심각한 문제 ② 있다 &mdash; 경미한 문제 ③ 없다 ④ 모르겠다</span></li>
+        <li><span class="qt">담당 직무와 직급을 골라주세요.</span><span class="qo">직무 14분류(기획·영업·마케팅·개발·디자인·재무·인사·생산·물류·연구·의료·교육·공공·서비스) &times; 직급 5분류</span><span class="qn">분류 문항</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>취업자 AI 업무침투율 31.2%, 그런데 그중 44%는 회사가 모르게 쓴다</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="pri">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">04</span><span class="code">PRI</span><span class="cyc">월간</span></div>
+    <div class="idx-main">
+      <h3>체감가격 저항지수</h3>
+      <p class="en">Price Resistance Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>월간</dd></div>
+        <div><dt>표본</dt><dd>10,000</dd></div>
+        <div><dt>문항</dt><dd>10</dd></div>
+        <div><dt>발표</dt><dd>CPI 발표 다음 영업일</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;0.98%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>통계청 소비자물가지수는 <b>실제 팔린 가격</b>을, 한국은행 기대인플레이션은 <b>추상적인 %</b>를 잰다. 둘 다 답하지 못하는 질문이 있다&mdash;&ldquo;아메리카노가 얼마가 되면 사람들이 안 사는가.&rdquo; 품목별 <b>지불의사 상한선(저항가격)</b>과 그 이탈 임계는 어느 공식 통계에도 없고, 정작 식품·외식·유통·통신의 가격 결정 회의에서 매달 필요한 숫자다. 슈링크플레이션 체감률 역시 마찬가지다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>식품·외식·프랜차이즈</span><span>대형유통·이커머스</span><span>통신·구독 서비스</span><span>공정거래위원회</span><span>한국은행</span><span>지자체 물가대책</span><span>언론</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">PRI = &Sigma;(품목별 저항가격 중앙값) 지수화(첫 12개월=100) &divide; 동일 품목 CPI 지수<br>PRI &gt; 100 : 지불의사가 실제 물가보다 빠르게 상승(가격 인상 여력 있음)<br>PRI &lt; 100 : 지불의사가 물가를 못 따라감(인상 시 이탈 발생) &mdash; 인상 여력의 조기경보</div></div>
+      <div class="blk"><h4>문항 10개</h4>
+      <ol class="q">
+        <li><span class="qt">다음 품목이 &lsquo;이 가격이 넘으면 나는 안 산다&rsquo;고 느끼는 금액을 적어 주세요.</span><span class="qo">아메리카노 1잔 / 김밥 1줄 / 배달 짜장면 1그릇(배달비 포함) / 삼겹살 1인분 / 라면 5개입 / 계란 30구 / 식당 소주 1병 / 택시 기본요금 / 영화 1편 / 헬스장 1개월 &mdash; 각 직접 입력(원)</span><span class="qn">이 지표 전체의 심장. 중앙값·분포·시도별 격차가 모두 헤드라인이 된다</span></li>
+        <li><span class="qt">최근 3개월 안에 가격 때문에 아예 사지 않게 된 것을 모두 골라주세요.</span><span class="qo">① 커피전문점 커피 ② 배달음식 ③ 외식 ④ 과일 ⑤ 소고기·돼지고기 ⑥ 수입 과자·간식 ⑦ 술 ⑧ 택시 ⑨ 영화·공연 ⑩ 헬스·필라테스 ⑪ OTT·음악 구독 ⑫ 미용실·네일 ⑬ 끊은 것 없다</span><span class="qn">복수응답 · 품목별 &lsquo;이탈률&rsquo; 시계열</span></li>
+        <li><span class="qt">가격은 그대로인데 양이나 품질이 줄었다고 느낀 적이 있습니까?</span><span class="qo">① 자주 있다 ② 가끔 있다 ③ 없다 ④ 모르겠다 &rarr; (①② 선택 시) 어떤 품목이었습니까(복수)</span><span class="qn">슈링크플레이션 체감률. 정부 조사는 적발 건수 기준, 이건 소비자 인지 기준</span></li>
+        <li><span class="qt">자주 사던 물건 가격이 오르면 보통 어떻게 하십니까?</span><span class="qo">① 그냥 그대로 산다 ② 더 싼 브랜드로 바꾼다 ③ PB·자체상품으로 바꾼다 ④ 사는 횟수를 줄인다 ⑤ 아예 끊는다</span><span class="qn">브랜드 이탈 탄력성. 제조사 가격 결정에 직결</span></li>
+        <li><span class="qt">앞으로 1년 동안 물가가 몇 % 오를 것 같습니까?</span><span class="qo">직접 입력(%)</span><span class="qn">검증 앵커 문항 &mdash; 한국은행 기대인플레이션과 매달 대조 공개</span></li>
+        <li><span class="qt">최근 가장 많이 올랐다고 느끼는 것 한 가지만 골라주세요.</span><span class="qo">① 식료품 ② 외식 ③ 배달비 ④ 전기·가스 ⑤ 월세·관리비 ⑥ 대출 이자 ⑦ 교통비 ⑧ 통신비 ⑨ 보험료 ⑩ 학원·교육비 ⑪ 병원비 ⑫ 구독료</span></li>
+        <li><span class="qt">외식 한 끼에 &lsquo;이 정도면 비싸다&rsquo;고 느끼는 1인 기준 금액은 얼마입니까?</span><span class="qo">① 1만 원 미만 ② 1&ndash;1만5천 원 ③ 1만5천&ndash;2만 원 ④ 2&ndash;3만 원 ⑤ 3만 원 이상</span></li>
+        <li><span class="qt">장을 볼 때 최근 3개월 사이 주로 바뀐 곳이 있습니까?</span><span class="qo">① 대형마트 ② 온라인몰·새벽배송 ③ 창고형 할인점 ④ 전통시장 ⑤ 편의점 ⑥ 균일가 생활용품점 ⑦ 바뀐 곳 없다</span><span class="qn">채널 이동 시계열 &mdash; 유통 3사가 각자 자기 데이터로는 절대 못 보는 값</span></li>
+        <li><span class="qt">지금 돈을 내고 쓰는 구독 서비스는 몇 개이고, 최근 3개월 안에 몇 개를 해지했습니까?</span><span class="qo">보유 개수 직접 입력 / 해지 개수 직접 입력</span><span class="qn">구독 순증감률. 순수 해지율 시계열은 국내에 없다</span></li>
+        <li><span class="qt">&ldquo;지금은 아껴야 할 때다&rdquo;라는 말에 얼마나 동의하십니까?</span><span class="qo">① 매우 동의 ② 다소 동의 ③ 반반 ④ 다소 비동의 ⑤ 매우 비동의</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>국민이 정한 아메리카노 상한선 4,300원 &mdash; 실제 평균가와 처음으로 역전</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="ari">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">05</span><span class="code">ARI</span><span class="cyc">월간</span></div>
+    <div class="idx-main">
+      <h3>가계 자산이동 지수</h3>
+      <p class="en">Household Asset Rotation Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>월간</dd></div>
+        <div><dt>표본</dt><dd>10,000</dd></div>
+        <div><dt>문항</dt><dd>9</dd></div>
+        <div><dt>발표</dt><dd>매월 둘째 화 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;0.98%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>가계금융복지조사는 <b>연 1회</b>이고 자산 기준일이 3월 31일이라 결과가 나올 때면 이미 반년 이상 지난 그림이다. 예탁결제원은 계좌를, 거래소는 체결을 볼 뿐 <b>같은 사람의 돈이 예금에서 어디로 옮겨갔는지</b>를 못 본다. 예금&middot;주식&middot;가상자산&middot;금&middot;부동산 사이의 <b>월간 자금 회전 방향</b>을 인구대표 표본으로 재면, 자금흐름표보다 한 분기 빠른 그림이 나온다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>증권·자산운용</span><span>은행 수신전략</span><span>가상자산 거래소</span><span>보험·연금</span><span>한국은행·금융위</span><span>부동산 시행·금융</span><span>외국계 IB</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">자산군별 ARI = {(크게 늘림&times;1.0)+(조금 늘림&times;0.5)&minus;(조금 줄임&times;0.5)&minus;(크게 줄임&times;1.0)} &divide; 보유자수 &times; 100 + 100<br>9개 자산군을 각각 산출해 &lsquo;자금 회전 지도&rsquo;로 동시 공표. 종합 ARI는 위험자산 4종 가중평균.</div></div>
+      <div class="blk warn callout" style="margin-top:16px;padding:14px 18px">
+        <h4>설계 제약</h4>
+        <p>개별 종목·코인·상품명을 묻거나 공표하지 않는다. <b>자산군 단위</b>로만 설계해 자본시장법상 투자권유·투자자문 소지를 원천 차단하고, 발표문에 &ldquo;투자 판단의 참고자료가 아니며 특정 자산을 권유하지 않는다&rdquo;를 상시 고지한다.</p>
+      </div>
+      <div class="blk"><h4>문항 9개</h4>
+      <ol class="q">
+        <li><span class="qt">현재 보유하고 계신 것을 모두 골라주세요.</span><span class="qo">① 예·적금 ② 국내 주식 ③ 해외 주식 ④ 채권 ⑤ 펀드·ETF ⑥ 가상자산 ⑦ 금·실물자산 ⑧ 거주용 부동산 ⑨ 투자용 부동산 ⑩ 연금저축·IRP ⑪ 아무것도 없다</span></li>
+        <li><span class="qt">지난 한 달 동안 각 자산의 금액을 어떻게 조정하셨습니까?</span><span class="qo">(보유 자산군별로) ① 크게 늘렸다 ② 조금 늘렸다 ③ 그대로다 ④ 조금 줄였다 ⑤ 크게 줄였다</span><span class="qn">지수의 본체. 자산군별 순유입·순유출 방향을 동시에 산출하는 유일한 문항</span></li>
+        <li><span class="qt">앞으로 3개월 안에 비중을 늘릴 계획인 자산을 순서대로 두 개 골라주세요.</span><span class="qo">1순위 / 2순위 &mdash; Q1과 동일 보기</span><span class="qn">선행 3개월. 자금 이동의 예고편</span></li>
+        <li><span class="qt">금융자산 가운데 현금·예금이 차지하는 비중은 대략 얼마입니까?</span><span class="qo">① 10% 미만 ② 10&ndash;30% ③ 30&ndash;50% ④ 50&ndash;70% ⑤ 70&ndash;90% ⑥ 90% 이상</span></li>
+        <li><span class="qt">최근 투자에 넣은 돈은 어디서 마련한 것입니까?</span><span class="qo">① 근로·사업 소득 ② 예·적금 해지 ③ 신용대출 ④ 주식담보·미수·레버리지 ⑤ 퇴직금·연금 ⑥ 가족 지원 ⑦ 투자하지 않음</span><span class="qn">복수응답 · ③④ 합계가 &lsquo;빚투 비중&rsquo;. 금융안정 보고서가 가장 원하는 숫자</span></li>
+        <li><span class="qt">앞으로 3개월 전망은 어떻습니까?</span><span class="qo">(국내 주식 / 부동산 / 가상자산 각각) ① 크게 오른다 ② 다소 오른다 ③ 비슷하다 ④ 다소 내린다 ⑤ 크게 내린다</span></li>
+        <li><span class="qt">최근 1년 투자 성과는 체감상 어떻습니까?</span><span class="qo">① +30% 초과 ② +10&ndash;30% ③ &plusmn;10% 이내 ④ &minus;10&ndash;30% ⑤ &minus;30% 초과 ⑥ 투자 안 함</span></li>
+        <li><span class="qt">노후 준비는 어느 정도 되어 있다고 생각하십니까?</span><span class="qo">① 충분하다 ② 다소 되어 있다 ③ 반반 ④ 부족하다 ⑤ 전혀 안 돼 있다</span></li>
+        <li><span class="qt">연금저축·IRP 납입액은 최근 6개월 사이 어떻게 바뀌었습니까?</span><span class="qo">① 늘렸다 ② 그대로 ③ 줄였다 ④ 중단했다 ⑤ 중도 인출했다 ⑥ 가입 안 함</span><span class="qn">⑤ 중도인출률은 가계 압박의 마지막 단계 신호 &mdash; CFA와 교차 검증</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>예금 &minus;12.4, 금 +18.9 &mdash; 40대는 가상자산으로, 60대는 금으로 갈라섰다</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="hmi">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">06</span><span class="code">HMI</span><span class="cyc">분기</span></div>
+    <div class="idx-main">
+      <h3>주거 이동 실행지수</h3>
+      <p class="en">Housing Move Intent Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>분기(4·7·10·12월)</dd></div>
+        <div><dt>표본</dt><dd>5,000</dd></div>
+        <div><dt>문항</dt><dd>10</dd></div>
+        <div><dt>발표</dt><dd>해당 월 셋째 목 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;1.39%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>한국은행 주택가격전망CSI는 <b>가격에 대한 생각</b>을 묻고, 국토부 주거실태조사는 연 1회 <b>지난 일</b>을 묻는다. 정작 시장을 움직이는 것은 &ldquo;앞으로 6개월 안에 실제로 이사할 사람이 몇 %인가&rdquo;, &ldquo;전세 계약 만기에 월세로 갈아탈 사람이 몇 %인가&rdquo;다. 이 <b>실행 의향</b>은 거래량보다 한 분기 앞서고, 4개 분기를 누적하면 시도별로 쪼갤 수 있다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>건설·시행</span><span>중개 플랫폼</span><span>은행 주택담보대출</span><span>이사·가전·인테리어</span><span>가구·리빙</span><span>지자체 주택과</span><span>국토연구원</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">HMI = (Q2 6개월 내 이사 의향 지수 &times; 0.5) + (Q5 1년 내 매수 의향 지수 &times; 0.5)<br>동시 공표: 전세이탈률(Q4 ②④) · 순유입 권역(Q3) · 주거비 부담률(Q8)</div></div>
+      <div class="blk"><h4>문항 10개</h4>
+      <ol class="q">
+        <li><span class="qt">현재 살고 계신 집의 형태는 무엇입니까?</span><span class="qo">① 자가 ② 전세 ③ 보증부 월세(반전세) ④ 월세 ⑤ 무상·사택 ⑥ 기숙사·고시원·셰어</span></li>
+        <li><span class="qt">앞으로 6개월 안에 이사할 계획이 있습니까?</span><span class="qo">① 이미 계약을 마쳤다 ② 계획이 매우 있다 ③ 다소 있다 ④ 없다</span></li>
+        <li><span class="qt">이사한다면 어디로 가실 것 같습니까?</span><span class="qo">① 지금 사는 동네 안 ② 같은 시·군·구 안 ③ 같은 시·도 안 다른 시·군·구 ④ 수도권 &rarr; 비수도권 ⑤ 비수도권 &rarr; 수도권 ⑥ 해외</span><span class="qn">④⑤ 순차 비교가 곧 &lsquo;지방소멸 체감 지수&rsquo;. 주민등록 전입신고 통계보다 한 분기 빠르다</span></li>
+        <li><span class="qt">지금 계약이 끝날 때 어떤 형태로 바꾸실 계획입니까?</span><span class="qo">① 전세 그대로 ② 전세 &rarr; 월세 ③ 월세 &rarr; 전세 ④ 보증금을 낮추고 월세를 올림 ⑤ 매수로 전환 ⑥ 아직 모르겠다</span><span class="qn">②④ 합계 = 월세화 압력. 확정일자 통계는 사후, 이건 사전</span></li>
+        <li><span class="qt">앞으로 1년 안에 집을 살 생각이 있습니까?</span><span class="qo">① 있다 &mdash; 자금·대출을 알아보는 중 ② 있다 &mdash; 여건이 되면 ③ 없다 ④ 이미 보유하고 있다</span></li>
+        <li><span class="qt">집을 사기 어렵게 만드는 가장 큰 이유는 무엇입니까?</span><span class="qo">① 집값 자체가 높다 ② 대출 한도(DSR) ③ 금리 부담 ④ 집값이 더 내릴 것 같아서 ⑤ 소득·고용이 불안해서 ⑥ 전세보증금을 못 돌려받을까 봐 ⑦ 세금·규제</span></li>
+        <li><span class="qt">지금 집에서 가장 불만인 점을 두 개 골라주세요.</span><span class="qo">① 좁다 ② 낡았다 ③ 주거비가 비싸다 ④ 소음 ⑤ 주차 ⑥ 통근 거리 ⑦ 학군 ⑧ 생활 인프라 ⑨ 치안 ⑩ 불만 없다</span></li>
+        <li><span class="qt">월 소득에서 주거비(월세·관리비·대출 원리금)가 차지하는 비중은 얼마입니까?</span><span class="qo">① 10% 미만 ② 10&ndash;20% ③ 20&ndash;30% ④ 30&ndash;40% ⑤ 40&ndash;50% ⑥ 50% 이상</span><span class="qn">&lsquo;주거비 과부담 가구 비율&rsquo;을 분기마다 시도별로 낼 수 있게 된다</span></li>
+        <li><span class="qt">앞으로 1년, 지금 사시는 지역의 집값은 어떻게 될 것 같습니까?</span><span class="qo">① 크게 오른다 ② 다소 오른다 ③ 비슷하다 ④ 다소 내린다 ⑤ 크게 내린다</span><span class="qn">한국은행 전국 지수와 달리 시도별(분기 누적) 산출 &mdash; 이 지표의 상업적 핵심</span></li>
+        <li><span class="qt">(수도권 거주자) 지방으로 옮겨 살 생각이 있습니까 / (비수도권 거주자) 수도권으로 옮길 생각이 있습니까?</span><span class="qo">① 매우 있다 ② 다소 있다 ③ 별로 없다 ④ 전혀 없다 &rarr; (①② 응답 시) 조건: 일자리 / 주거비 / 가족 / 의료 / 자녀 교육 / 정주 지원금</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>전세 만기 가구의 31%가 &ldquo;월세로 갈아탄다&rdquo; &mdash; 인천·대구는 40% 넘어</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="ldi">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">07</span><span class="code">LDI</span><span class="cyc">반기</span></div>
+    <div class="idx-main">
+      <h3>생애 결정 의향지수</h3>
+      <p class="en">Life Decision Intent Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>반기(3·9월)</dd></div>
+        <div><dt>표본</dt><dd>10,000</dd></div>
+        <div><dt>문항</dt><dd>14</dd></div>
+        <div><dt>발표</dt><dd>해당 월 넷째 화 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;0.98%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>저출산고령사회위원회 인식조사는 표본 <span class="mono">2,500</span>명에 25&ndash;49세로 한정돼 <b>시도별로 쪼갤 수 없다</b>. 그런데 저출생 예산을 집행하는 주체는 17개 광역·226개 기초자치단체다. 1만 명이면 &lsquo;시도 &times; 소득분위별 출산 의향&rsquo;을 국내 최초로 산출할 수 있고, 이것이 이 지표의 존재 이유 전부다. 통계청 출생아 수는 결정으로부터 최소 18개월 뒤에 나온다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>17개 시도·기초지자체</span><span>저출산고령사회위</span><span>생명·손해보험</span><span>유아·교육기업</span><span>건설(가구 수 추계)</span><span>인구학계</span><span>국제기구·외신</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">핵심 지표 &mdash; <b>출산 격차(Fertility Gap) = 이상 자녀 수 평균 &minus; 예상 자녀 수 평균</b><br>격차가 클수록 &lsquo;낳고 싶지만 못 낳는&rsquo; 구조적 제약이 크다는 뜻. 정책 효과는 출생아 수가 아니라<br>이 격차의 축소로 먼저 나타난다. 시도별·소득분위별로 산출해 지자체 정책 평가 축으로 제공.</div></div>
+      <div class="blk"><h4>문항 14개</h4>
+      <ol class="q">
+        <li><span class="qt">현재 혼인 상태는 어떻게 되십니까?</span><span class="qo">① 미혼 ② 사실혼·동거 ③ 기혼 ④ 이혼·별거 ⑤ 사별</span></li>
+        <li><span class="qt">(미혼) 결혼할 생각이 있으십니까?</span><span class="qo">① 반드시 할 것이다 ② 하는 편이 좋다고 본다 ③ 반반이다 ④ 안 하는 편이 좋다 ⑤ 절대 하지 않겠다</span></li>
+        <li><span class="qt">결혼을 미루거나 하지 않는 가장 큰 이유는 무엇입니까?</span><span class="qo">① 결혼 자금·주거 마련 ② 소득·고용 불안 ③ 마땅한 상대를 못 만남 ④ 결혼 제도·관계의 부담 ⑤ 혼자가 편해서 ⑥ 가사·돌봄이 나에게 쏠릴 것 같아서 ⑦ 출산·양육 부담 ⑧ 부모 부양 부담</span></li>
+        <li><span class="qt">자녀 계획은 어떻게 되십니까?</span><span class="qo">① 자녀가 있고 더 낳을 계획이 있다 ② 자녀가 있고 더는 계획 없다 ③ 없지만 낳을 계획이 있다 ④ 없고 계획도 없다 ⑤ 아직 정하지 못했다</span></li>
+        <li><span class="qt">이상적으로 생각하는 자녀 수와, 실제로 낳게 될 것 같은 자녀 수를 각각 적어 주세요.</span><span class="qo">이상 자녀 수 ___명 / 예상 자녀 수 ___명 (0&ndash;5)</span><span class="qn">이 지표 전체의 심장. 두 값의 차이가 &lsquo;출산 격차&rsquo;다</span></li>
+        <li><span class="qt">더 낳지 않기로 한 이유를 순서대로 두 개 골라주세요.</span><span class="qo">① 양육·교육비 ② 주거 ③ 일과 육아 병행 어려움 ④ 경력 단절 ⑤ 나이·건강 ⑥ 돌봄 인프라 부족 ⑦ 배우자와의 합의 ⑧ 아이의 미래가 걱정돼서 ⑨ 지금 삶에 만족해서 ⑩ 배우자가 없어서</span></li>
+        <li><span class="qt">어떤 조건이 갖춰지면 한 명 더 낳을 수 있겠습니까?</span><span class="qo">① 주거 지원(전세·분양) ② 월 100만 원 이상 현금 지원 ③ 확실한 돌봄(어린이집·돌봄교사) ④ 근로시간 단축·유연근무 ⑤ 배우자의 육아 참여 ⑥ 고용 안정 ⑦ 사교육비 경감 ⑧ 어떤 조건이어도 낳지 않는다</span><span class="qn">복수응답 · ⑧의 비율이 정책 무반응층 규모다. 지자체 예산 설계에 직접 쓰인다</span></li>
+        <li><span class="qt">지금 직장에서 육아휴직을 실제로 쓸 수 있다고 보십니까?</span><span class="qo">① 눈치 없이 쓸 수 있다 ② 쓸 수는 있지만 불이익이 있다 ③ 사실상 못 쓴다 ④ 제도가 없다 ⑤ 해당 없음</span></li>
+        <li><span class="qt">앞으로 5년 안에 겪게 될 것 같은 변화를 모두 골라주세요.</span><span class="qo">① 결혼 ② 출산 ③ 이혼 ④ 이직 ⑤ 이사 ⑥ 창업 ⑦ 은퇴 ⑧ 부모 부양 시작 ⑨ 해외 이주 ⑩ 없다</span><span class="qn">복수응답 · 생애사건 파이프라인. 보험·금융의 상품 수요 추계에 직결</span></li>
+        <li><span class="qt">부모나 가족을 돌보고 계십니까? 그렇다면 월 평균 비용과 주당 시간을 적어 주세요.</span><span class="qo">① 돌보지 않는다 ② 돌본다 &rarr; 월 ___만 원 / 주 ___시간 / 그로 인해 일을 줄이거나 그만둠(예·아니오)</span></li>
+        <li><span class="qt">몇 살에 은퇴할 것 같고, 은퇴 후 매달 얼마가 필요하다고 보십니까?</span><span class="qo">예상 은퇴 연령 ___세 / 월 필요 생활비 ___만 원</span></li>
+        <li><span class="qt">반려동물을 기르고 계십니까?</span><span class="qo">① 개 ② 고양이 ③ 그 외 ④ 기르지 않지만 계획 있다 ⑤ 없고 계획도 없다</span><span class="qn">가구 구성 변화의 대체 신호이자 펫 산업의 유일한 인구대표 시계열</span></li>
+        <li><span class="qt">혼자 살고 계십니까? 앞으로도 그럴 계획입니까?</span><span class="qo">① 1인 가구, 계속 그럴 계획 ② 1인 가구, 바뀔 것 같다 ③ 1인 가구 아님</span><span class="qn">검증 앵커 &mdash; 주민등록 1인가구 비율과 대조 공개</span></li>
+        <li><span class="qt">기회가 된다면 다른 나라로 이주해 살 생각이 있습니까?</span><span class="qo">① 매우 있다 ② 다소 있다 ③ 별로 없다 ④ 전혀 없다 &rarr; (①② 응답 시) 이유: 일자리 / 자녀 교육 / 노동시간 / 물가·주거 / 사회 분위기 / 안전</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>이상은 1.87명, 예상은 0.94명 &mdash; 출산 격차 0.93명, 서울이 가장 크고 세종이 가장 작다</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="dvi">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">08</span><span class="code">DVI</span><span class="cyc">분기</span></div>
+    <div class="idx-main">
+      <h3>디지털 피해 실태지수</h3>
+      <p class="en">Digital Victimization Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>분기(2·5·8·11월)</dd></div>
+        <div><dt>표본</dt><dd>5,000</dd></div>
+        <div><dt>문항</dt><dd>11</dd></div>
+        <div><dt>발표</dt><dd>해당 월 첫째 목 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;1.39%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가 &mdash; 열 개 중 가장 독점적인 칸</h4>
+        <p>경찰청·금융감독원 통계는 <b>신고된 것</b>만 센다. 그런데 온라인 사기의 신고율은 <b>27% 수준</b>에 그친다&mdash;금액이 적어서, 번거로워서, 창피해서 신고하지 않는다. 즉 공식 통계는 구조적으로 실제의 3분의 1만 본다. 숨은 피해(암수)를 잡는 유일한 방법이 인구대표 설문인데, 국가 차원의 전국범죄피해조사는 격년이라 디지털 사기의 유행 주기를 따라잡지 못한다. <b>분기마다 국민 표본에게 직접 묻는 것</b>&mdash;이건 정부도 못 하고 우리는 할 수 있다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>은행·카드 FDS</span><span>사이버보험</span><span>중고거래·메신저 플랫폼</span><span>통신 3사</span><span>경찰청·금감원</span><span>과기정통부·KISA</span><span>언론</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">DVI = 분기 실피해 경험률(%) &times; 100 &divide; 기준분기 경험률<br>동시 공표 3종 &mdash; <b>노출률</b>(시도 접촉) / <b>실피해율</b> / <b>암수배율 = 실피해율 &divide; 신고율</b><br>암수배율은 공식 통계에 곱하면 실제 피해 규모 추정치가 나오는 계수로, 언론·정책이 반복 인용한다.</div></div>
+      <div class="blk callout warn" style="margin-top:16px;padding:14px 18px">
+        <h4>조사 윤리 장치</h4>
+        <p>피해 회상은 심리적 부담을 준다. ① 모든 피해 문항에 &lsquo;답변하지 않음&rsquo; 보기를 두고 ② 모듈 종료 화면에 보이스피싱 통합신고(112)·금융감독원(1332)·정신건강 상담(109) 안내를 노출하며 ③ 성적 피해(딥페이크 등)는 유형 확인까지만 묻고 세부를 묻지 않는다. 이 장치들을 방법론서에 명시하는 것 자체가 기관 인용의 전제 조건이 된다.</p>
+      </div>
+      <div class="blk"><h4>문항 11개</h4>
+      <ol class="q">
+        <li><span class="qt">최근 3개월 동안 다음과 같은 연락이나 접근을 받은 적이 있습니까?</span><span class="qo">① 보이스피싱 전화 ② 스미싱 문자·링크 ③ 투자 리딩방·단톡방 초대 ④ 연애를 가장한 접근(로맨스 스캠) ⑤ 중고거래 사기 시도 ⑥ 가족·지인 사칭 메신저 ⑦ 내 얼굴·목소리 합성물 ⑧ 계정 도용·해킹 시도 ⑨ 가짜 쇼핑몰·구매 사기 ⑩ 받은 적 없다</span><span class="qn">복수응답 · 노출률(시도 단계) 시계열</span></li>
+        <li><span class="qt">그중 실제로 돈이나 개인정보를 잃은 것이 있습니까?</span><span class="qo">Q1에서 고른 항목별로 &lsquo;피해 있음 / 없음&rsquo; 선택</span><span class="qn">노출 대비 전환율 = 수법별 &lsquo;성공률&rsquo;. 금융권 방어 설계의 핵심 값</span></li>
+        <li><span class="qt">가장 큰 피해의 금액은 얼마였습니까?</span><span class="qo">① 10만 원 미만 ② 10&ndash;50만 원 ③ 50&ndash;100만 원 ④ 100&ndash;500만 원 ⑤ 500&ndash;1,000만 원 ⑥ 1,000만&ndash;1억 원 ⑦ 1억 원 이상 ⑧ 금전 피해는 없음 ⑨ 답변하지 않음</span></li>
+        <li><span class="qt">그 피해를 어디에 신고하거나 알렸습니까?</span><span class="qo">① 경찰 ② 금융감독원·은행 ③ 이용한 플랫폼 ④ 통신사 ⑤ 아무 데도 알리지 않았다</span><span class="qn">복수응답 · ⑤의 비율이 암수배율의 분모</span></li>
+        <li><span class="qt">(신고하지 않았다면) 그 이유는 무엇입니까?</span><span class="qo">① 금액이 적어서 ② 절차가 번거로워서 ③ 어차피 못 받을 것 같아서 ④ 창피하거나 알려지기 싫어서 ⑤ 어디에 해야 할지 몰라서 ⑥ 내 잘못 같아서</span></li>
+        <li><span class="qt">피해 금액은 얼마나 돌려받으셨습니까?</span><span class="qo">① 전액 ② 일부 ③ 전혀 못 받았다 ④ 아직 진행 중</span></li>
+        <li><span class="qt">그 접근은 주로 어디를 통해 왔습니까?</span><span class="qo">① 문자·MMS ② 전화 ③ 카카오톡 ④ 인스타·유튜브·틱톡 광고 ⑤ 중고거래 앱 ⑥ 이메일 ⑦ 데이팅 앱 ⑧ 텔레그램 ⑨ 검색 결과·가짜 사이트</span><span class="qn">경로별 시계열은 플랫폼·통신사의 책임 논쟁에 데이터를 공급한다</span></li>
+        <li><span class="qt">그 과정에서 AI로 만든 목소리·얼굴·문장이 쓰였다고 느낀 정황이 있었습니까?</span><span class="qo">① 있었다 &mdash; 확실하다 ② 있었던 것 같다 ③ 없었다 ④ 모르겠다</span><span class="qn">&lsquo;AI 사기 체감 침투율&rsquo; &mdash; 국내외 어디에도 정기 시계열이 없는 신규 지표</span></li>
+        <li><span class="qt">피해 이후 행동이 바뀐 것이 있습니까?</span><span class="qo">① 모르는 번호를 안 받는다 ② 특정 앱을 지웠다 ③ 이체 한도를 줄였다 ④ 중고거래를 끊었다 ⑤ 가족에게 알렸다 ⑥ 바뀐 것 없다</span></li>
+        <li><span class="qt">사고 당시 은행·플랫폼의 대응에 얼마나 만족하셨습니까?</span><span class="qo">① 매우 만족 ② 다소 만족 ③ 보통 ④ 다소 불만 ⑤ 매우 불만</span></li>
+        <li><span class="qt">그 일이 지금 생활이나 마음에 얼마나 영향을 주고 있습니까?</span><span class="qo">① 전혀 없다 ② 조금 있다 ③ 꽤 있다 ④ 매우 크다 ⑤ 답변하지 않음 &mdash; (종료 화면에 상담 안내 노출)</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>석 달 새 국민 100명 중 7명이 실제로 당했다 &mdash; 그중 신고한 사람은 2.6명</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="hai">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">09</span><span class="code">HAI</span><span class="cyc">반기</span></div>
+    <div class="idx-main">
+      <h3>건강 접근성 지수</h3>
+      <p class="en">Health Access Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>반기(6·12월)</dd></div>
+        <div><dt>표본</dt><dd>5,000</dd></div>
+        <div><dt>문항</dt><dd>12</dd></div>
+        <div><dt>발표</dt><dd>해당 월 둘째 화 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;1.39%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>건강보험 데이터는 <b>급여 진료</b>만, 국민건강영양조사는 <b>검진과 영양</b> 중심이다. 비급여 영역&mdash;체중감량 의약품, 비대면 처방, 정신건강 미치료, 가족 간병&mdash;은 통계의 사각지대다. 체중감량 주사제만 해도 처방 <b>건수</b> 통계는 있지만 <b>인구 중 몇 %가 쓰고, 몇 %가 중단했으며, 얼마를 쓰고, 어떤 경로로 구했는지</b>는 아무도 모른다. 20&ndash;30대가 처방의 절반을 넘는 시장에서 이 공백은 제약·보험·규제 모두에게 비용이다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>제약·바이오</span><span>실손·간병보험</span><span>병·의원·비대면진료</span><span>건강기능식품·식품</span><span>헬스케어 앱</span><span>보건복지부·식약처</span><span>심평원·건보공단</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">HAI = 100 &minus; (미충족 의료 경험률 지수 &times; 0.4 + 비용 사유 포기율 지수 &times; 0.3 + 정신건강 미치료율 지수 &times; 0.3)<br>보조 공표: 체중감량 의약품 인구 사용률 · 중단률 · 비정상 유통 경로 비율 · PHQ-2/GAD-2 유병 추정</div></div>
+      <div class="blk callout warn" style="margin-top:16px;padding:14px 18px">
+        <h4>규제 준수 설계</h4>
+        <p>의료법·약사법상 의약품 효능·안전성에 대한 광고성 표현이 금지되므로, ① 제품명 대신 <b>성분군</b>(체중감량 목적 GLP-1 계열 등)으로만 표기하고 ② 효과를 묻지 않고 <b>사용·중단·비용·경로</b>만 묻는다 ③ 결과 발표에서 특정 제품 간 비교나 순위를 내지 않는다. 정신건강 문항은 PHQ-2·GAD-2 <b>국제 표준 척도</b>를 원문 그대로 사용해 진단이 아닌 선별 지표임을 명시하고, 종료 화면에 상담 안내를 노출한다.</p>
+      </div>
+      <div class="blk"><h4>문항 12개</h4>
+      <ol class="q">
+        <li><span class="qt">최근 6개월 동안 아팠는데도 병원에 가지 못한 적이 있습니까?</span><span class="qo">① 있다 ② 없다 &rarr; (있다면) 이유: 비용 / 시간이 없어서 / 예약이 안 돼서 / 거리가 멀어서 / 대기가 길어서 / 그 진료과가 없어서</span><span class="qn">미충족 의료율. 지역별 격차가 지방 의료 논쟁의 실측치가 된다</span></li>
+        <li><span class="qt">체중 감량을 목적으로 한 의약품(주사제·경구제)을 사용해 보신 적이 있습니까?</span><span class="qo">① 현재 사용 중 ② 과거에 썼고 지금은 중단 ③ 써 볼 생각이 있다 ④ 관심 없다 ⑤ 답변하지 않음</span><span class="qn">인구 기준 사용률 &mdash; 처방 건수 통계로는 절대 계산되지 않는 값</span></li>
+        <li><span class="qt">(중단했다면) 그만둔 가장 큰 이유는 무엇입니까?</span><span class="qo">① 비용 부담 ② 몸에 맞지 않아서 ③ 목표를 이뤄서 ④ 기대만큼 변화가 없어서 ⑤ 구하기 어려워서 ⑥ 주변의 시선</span></li>
+        <li><span class="qt">그 비용은 한 달에 얼마입니까?</span><span class="qo">① 10만 원 미만 ② 10&ndash;20만 원 ③ 20&ndash;40만 원 ④ 40&ndash;60만 원 ⑤ 60만 원 이상</span></li>
+        <li><span class="qt">어디서 구하셨습니까?</span><span class="qo">① 병원 대면 진료 ② 비대면 진료 ③ 지인에게 양도받음 ④ 해외 직구·구매대행 ⑤ 온라인 개인 거래</span><span class="qn">③④⑤ 합계 = 비정상 유통 비율. 식약처가 자체 조사로는 얻기 어려운 숫자</span></li>
+        <li><span class="qt">지난 2주 동안 다음을 얼마나 자주 느끼셨습니까?</span><span class="qo">(4문항 &mdash; 일에 흥미가 없음 / 가라앉거나 우울함 / 초조하거나 불안함 / 걱정을 멈추기 어려움) 각각 ① 전혀 아님 ② 며칠 ③ 절반 이상 ④ 거의 매일</span><span class="qn">PHQ-2 + GAD-2 국제 표준 척도. 국가 간·국내 시계열 비교가 가능해 인용 가치가 급등한다</span></li>
+        <li><span class="qt">마음이 힘들 때 도움을 구해 본 적이 있습니까?</span><span class="qo">① 정신건강의학과 ② 심리상담센터 ③ 상담 앱·온라인 ④ 가족·친구 ⑤ 구하지 않았다 &rarr; (⑤) 이유: 비용 / 시간 / 기록이 남을까 봐 / 주변 시선 / 필요 없다고 생각</span><span class="qn">&lsquo;기록이 남을까 봐&rsquo;의 비율은 보험 인수 심사 관행에 직접 닿는 정책 데이터</span></li>
+        <li><span class="qt">평일 평균 수면 시간과 수면의 질은 어떻습니까?</span><span class="qo">___시간 / 수면의 질 ① 매우 좋음 &ndash; ⑤ 매우 나쁨</span></li>
+        <li><span class="qt">실손의료보험이 있으십니까? 최근 1년 청구 횟수와 보험료 인상 체감을 알려 주세요.</span><span class="qo">보유 ①있음 ②없음 ③모름 / 청구 ___회 / 인상 체감 ① 크게 올랐다 ② 다소 ③ 그대로 ④ 모름</span></li>
+        <li><span class="qt">가족을 간병하고 계십니까?</span><span class="qo">① 아니다 ② 그렇다 &rarr; 월 비용 ___만 원 / 주 ___시간 / 이 때문에 일을 줄이거나 그만둠(예·아니오)</span><span class="qn">간병비는 초고령사회 최대 가계 리스크인데 정기 통계가 없다</span></li>
+        <li><span class="qt">건강기능식품에 한 달에 얼마를 쓰십니까?</span><span class="qo">① 0원 ② 3만 원 미만 ③ 3&ndash;7만 원 ④ 7&ndash;15만 원 ⑤ 15만 원 이상</span></li>
+        <li><span class="qt">앞으로 6개월 동안 건강 관련 지출을 어떻게 하실 계획입니까?</span><span class="qo">① 크게 늘린다 ② 다소 늘린다 ③ 그대로 ④ 다소 줄인다 ⑤ 크게 줄인다</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>체중감량 주사, 성인 4.8%가 써봤다 &mdash; 그중 5명 중 1명은 병원 밖에서 구했다</q></div>
+    </div>
+  </div>
+</article>
+
+<article class="idx" id="kti">
+  <div class="tick major"></div>
+  <div class="idx-body">
+    <div class="rail"><span class="num">10</span><span class="code">KTI</span><span class="cyc">연간</span></div>
+    <div class="idx-main">
+      <h3>한국 신뢰지수</h3>
+      <p class="en">Korea Trust Index</p>
+      <dl class="spec">
+        <div><dt>주기</dt><dd>연간(1월)</dd></div>
+        <div><dt>표본</dt><dd>10,000</dd></div>
+        <div><dt>문항</dt><dd>15</dd></div>
+        <div><dt>발표</dt><dd>1월 셋째 주 화 08:00</dd></div>
+        <div><dt>오차</dt><dd>&plusmn;0.98%p</dd></div>
+      </dl>
+      <div class="blk gapnote">
+        <h4>왜 아직 없는가</h4>
+        <p>에델만 신뢰도 지표조사는 25년째 세계 28개국을 조사하지만 국가당 표본은 <span class="mono">1,100&ndash;1,500</span>명이고 문항이 전 세계 공통이라 <b>국내 업권을 쪼갤 수 없다</b>. 은행과 가상자산 거래소, 배달앱과 대형마트, 병원과 언론이 각각 몇 점인지&mdash;그리고 그 점수가 세대·지역·소득에 따라 어떻게 갈라지는지&mdash;를 매년 같은 방식으로 재는 국내 지표는 없다. 모든 업권의 홍보·IR·ESG 부서가 매년 1월에 인용할 단 하나의 숫자를 만드는 자리다.</p>
+      </div>
+      <div class="blk"><h4>수요처</h4><div class="buyers"><span>전 업권 IR·홍보·ESG</span><span>업종별 협회</span><span>광고·PR 대행</span><span>정부·국회</span><span>언론</span><span>학계</span><span>해외 투자자</span></div></div>
+      <div class="blk"><h4>산식</h4><div class="formula">업권별 KTI = 0&ndash;10점 평균 &times; 10 (0&ndash;100 스케일)<br>종합 KTI = 16개 업권 단순평균. 부가 지표: 세대격차(20대&minus;60대) · 지역격차(최고 시도&minus;최저 시도) ·<br>신뢰 하락 폭 상위 3개 업권과 그 사유 구성비.</div></div>
+      <div class="blk callout warn" style="margin-top:16px;padding:14px 18px">
+        <h4>중립성 방어 &mdash; 이 지표에서 가장 중요한 설계</h4>
+        <p>개별 기업 순위를 유료로 판매하는 순간 지표 전체의 신뢰가 무너지고, 나머지 아홉 개 지표까지 오염된다. 규칙: ① 무료 공개는 <b>업권 단위</b>까지만 ② 개별 브랜드 데이터는 <b>모든 브랜드에 동일 조건·동일 가격</b>으로만 제공하고 문항·표본·산식을 공개 ③ 조사 대상 기업의 <b>광고·후원을 받지 않는다</b> ④ 조사 스폰서가 있는 해에는 표지에 명시한다.</p>
+      </div>
+      <div class="blk"><h4>문항 15개</h4>
+      <ol class="q">
+        <li><span class="qt">다음 각각을 얼마나 신뢰하십니까? (0점 = 전혀 신뢰하지 않음, 10점 = 전적으로 신뢰함)</span><span class="qo">은행 / 보험사 / 증권사 / 가상자산 거래소 / 통신사 / 대형마트·백화점 / 이커머스 플랫폼 / 배달앱 / 제약회사 / 병원 / 자동차회사 / 건설사 / 언론 / 정부 / 법원 / 대기업 전반 &mdash; 각 0&ndash;10점</span><span class="qn">지표의 본체. 16개 업권 &times; 17개 시도 &times; 세대 교차가 1만 명으로 처음 가능해진다</span></li>
+        <li><span class="qt">지난 1년 사이 신뢰가 가장 크게 떨어진 곳은 어디이고, 이유는 무엇입니까?</span><span class="qo">업권 1개 선택 &rarr; 이유: 가격 인상 / 사고·품질 문제 / 개인정보 유출 / 불공정·갑질 / 경영진 리스크 / 정치적 편향 / AI 오·남용 / 고객 대응</span></li>
+        <li><span class="qt">내 개인정보를 믿고 맡길 수 있는 곳을 모두 골라주세요.</span><span class="qo">① 은행 ② 통신사 ③ 대형 플랫폼 ④ 병원 ⑤ 정부·공공기관 ⑥ 보험사 ⑦ 어디도 믿을 수 없다</span></li>
+        <li><span class="qt">AI가 내린 판단을 받아들일 수 있는 영역은 어디입니까?</span><span class="qo">① 대출 심사 ② 채용 서류 심사 ③ 의료 진단 보조 ④ 뉴스 작성 ⑤ 고객 상담 ⑥ 공공 민원 처리 ⑦ 어느 것도 안 된다</span><span class="qn">복수응답 · AI 수용도의 연간 시계열. 규제 논의의 기준선이 된다</span></li>
+        <li><span class="qt">우리나라 기업들이 사회적 책임을 다하고 있다고 보십니까?</span><span class="qo">① 매우 그렇다 &ndash; ⑤ 전혀 아니다</span></li>
+        <li><span class="qt">뉴스를 주로 어디서 보시고, 그 매체를 얼마나 믿으십니까?</span><span class="qo">경로: 포털 / 유튜브 / SNS / 신문·방송 직접 / 뉴스레터 / AI 챗봇 &rarr; 신뢰도 0&ndash;10점</span><span class="qn">&lsquo;AI 챗봇으로 뉴스를 본다&rsquo;의 비율은 미디어 업계가 곧 가장 두려워할 시계열이다</span></li>
+        <li><span class="qt">&ldquo;우리 사회는 공정하다&rdquo;에 얼마나 동의하십니까?</span><span class="qo">① 매우 동의 &ndash; ⑤ 전혀 비동의</span></li>
+        <li><span class="qt">&ldquo;노력하면 지금보다 나은 계층으로 올라갈 수 있다&rdquo;에 얼마나 동의하십니까?</span><span class="qo">① 매우 동의 &ndash; ⑤ 전혀 비동의</span><span class="qn">통계청 사회조사와 동일 문항을 써 교차검증 가능하게 설계</span></li>
+        <li><span class="qt">다음 갈등이 얼마나 심하다고 느끼십니까?</span><span class="qo">(세대 / 성별 / 지역 / 소득 / 이념 각각) ① 매우 심함 &ndash; ⑤ 전혀 아님</span></li>
+        <li><span class="qt">&ldquo;다음 세대의 삶은 지금보다 나아질 것이다&rdquo;에 얼마나 동의하십니까?</span><span class="qo">① 매우 동의 &ndash; ⑤ 전혀 비동의</span><span class="qn">에델만 글로벌 공통 문항과 동일 &mdash; 28개국 국제 비교가 가능해진다</span></li>
+        <li><span class="qt">우리나라 사람이라는 것이 자랑스럽습니까?</span><span class="qo">① 매우 그렇다 &ndash; ⑤ 전혀 아니다</span></li>
+        <li><span class="qt">기업이 사회 문제에 목소리를 내는 것에 대해 어떻게 생각하십니까?</span><span class="qo">① 적극적으로 내야 한다 ② 관련된 것만 ③ 내지 않는 게 낫다</span></li>
+        <li><span class="qt">최근 1년 안에 특정 기업의 제품·서비스를 신뢰 문제 때문에 끊은 적이 있습니까?</span><span class="qo">① 있다 &rarr; 업권 선택 ② 없다</span><span class="qn">신뢰의 매출 전환율 &mdash; 마케팅 예산 논의를 데이터로 옮기는 문항</span></li>
+        <li><span class="qt">앞으로 1년, 우리나라 경제는 어떻게 될 것 같습니까?</span><span class="qo">① 크게 좋아진다 &ndash; ⑤ 크게 나빠진다</span></li>
+        <li><span class="qt">배경 문항</span><span class="qo">소득 5분위 / 학력 / 직업 / 거주 시도 / 주택 점유형태</span><span class="qn">분류 문항</span></li>
+      </ol></div>
+      <div class="hl"><span class="lab">예상 헤드라인</span><q>16개 업권 신뢰도 &mdash; 병원 68.1점, 언론 31.4점, 20대와 60대의 격차가 가장 큰 곳은 &lsquo;정부&rsquo;</q></div>
+    </div>
+  </div>
+</article>
+
+</div>
+
+<section id="cal">
+  <h2><span class="n">05 &mdash; 운영</span>12개월 발표 캘린더</h2>
+  <div class="col sec-intro stack">
+    <p>전수 코어 15문항은 매달 한 글자도 바꾸지 않는다&mdash;월간 지표 네 개의 헤드라인이 여기서 나온다. 각 지표의 나머지 심층 문항은 <b>월간 심층</b> 슬롯에서 연 4회 확장 조사한다. 반기·연간 지표(LDI·KTI)는 시도별 분해가 존재 이유이므로 그달에는 모듈 A·B를 통합해 1만 명 전수로 돌린다.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>1년치 캘린더를 <b>전년 12월에 확정 공표</b>하고 이후 변경하지 않는다. 발표는 모두 08:00, 방법론서와 원자료 요약표를 동시 게시.</caption>
+      <thead><tr><th class="num">월</th><th>전수 코어 (10,000)</th><th>모듈 A (5,000)</th><th>모듈 B (5,000)</th><th>그달의 공표물</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1월</td><td class="code">CFA·KQI·PRI·ARI</td><td colspan="2" class="code" style="text-align:center">KTI &mdash; 전수 1만 · 15문항</td><td>월간 4종 + <b>한국 신뢰지수(연간)</b></td></tr>
+        <tr><td class="num">2월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">AWP</td><td class="code">DVI</td><td>월간 4종 + AWP 1Q + DVI 1Q</td></tr>
+        <tr><td class="num">3월</td><td class="code">CFA·KQI·PRI·ARI</td><td colspan="2" class="code" style="text-align:center">LDI &mdash; 전수 1만 · 14문항</td><td>월간 4종 + <b>생애 결정 의향(상반기)</b> + 코어 1Q 누적 시도별</td></tr>
+        <tr><td class="num">4월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">HMI</td><td>월간 심층 Ⅰ</td><td>월간 4종 + HMI 1Q</td></tr>
+        <tr><td class="num">5월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">AWP</td><td class="code">DVI</td><td>월간 4종 + AWP 2Q + DVI 2Q</td></tr>
+        <tr><td class="num">6월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">HAI</td><td>월간 심층 Ⅱ</td><td>월간 4종 + <b>건강 접근성(상반기)</b> + 코어 2Q 누적 시도별</td></tr>
+        <tr><td class="num">7월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">HMI</td><td>월간 심층 Ⅰ</td><td>월간 4종 + HMI 2Q</td></tr>
+        <tr><td class="num">8월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">AWP</td><td class="code">DVI</td><td>월간 4종 + AWP 3Q + DVI 3Q</td></tr>
+        <tr><td class="num">9월</td><td class="code">CFA·KQI·PRI·ARI</td><td colspan="2" class="code" style="text-align:center">LDI &mdash; 전수 1만 · 14문항</td><td>월간 4종 + <b>생애 결정 의향(하반기)</b> + 코어 3Q 누적 시도별</td></tr>
+        <tr><td class="num">10월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">HMI</td><td>월간 심층 Ⅱ</td><td>월간 4종 + HMI 3Q</td></tr>
+        <tr><td class="num">11월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">AWP</td><td class="code">DVI</td><td>월간 4종 + AWP 4Q + DVI 4Q</td></tr>
+        <tr><td class="num">12월</td><td class="code">CFA·KQI·PRI·ARI</td><td class="code">HAI</td><td class="code">HMI</td><td>월간 4종 + <b>건강 접근성(하반기)</b> + HMI 4Q + 코어 연간 4Q + <b>차년도 캘린더 공표</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <h4>응답 부담 &mdash; 이 설계의 실질적 상한</h4>
+    <p>응답자 1인이 마주하는 것은 <b>배경 5 + 코어 15 + 모듈 10 = 30문항, 9&ndash;11분</b>이다. 이 선을 넘으면 후반 문항의 무성의 응답(직선 응답·속도 응답)이 급증해 지표 품질이 무너진다. 문항을 추가하고 싶으면 <b>반드시 다른 문항을 뺀다</b>&mdash;예외를 한 번 허용하면 3년 안에 45문항짜리 조사가 된다. 응답 시간 중앙값과 직선응답률을 매 웨이브 방법론서에 함께 싣는다.</p>
+  </div>
+</section>
+
+<section id="trust">
+  <h2><span class="n">06 &mdash; 규약</span>&lsquo;쌈마이&rsquo;와 지표를 가르는 여덟 줄</h2>
+  <div class="col sec-intro stack">
+    <p>주제 선정이 아니라 <b>스스로 묶는 손발</b>이 권위를 만든다. 아래는 대외에 먼저 공개하고 어길 수 없게 만드는 규약이다.</p>
+  </div>
+  <div class="grid2">
+    <div class="card"><h4>공개 규약 &mdash; 지키는 것</h4>
+      <ul class="plain">
+        <li><b>사전 등록.</b> 문항 전문·산식·가중치 방법을 조사 시작 전 웹에 공개하고, 발표 후 변경하지 않는다. 개정이 필요하면 개정정책(revision policy)에 따라 <b>과거 시계열까지 소급 재계산</b>해 함께 낸다.</li>
+        <li><b>고정 캘린더.</b> 1년치 발표일을 전년 12월에 확정. 숫자가 밋밋해도, 불리해도 그날 낸다.</li>
+        <li><b>원자료 공개.</b> 발표 6개월 뒤 가명처리 마이크로데이터와 가중치 변수를 CSV로 무료 공개. 누구나 우리 숫자를 재현할 수 있게 한다.</li>
+        <li><b>실패 공시.</b> 설계효과·유효표본·응답 이탈률·직선응답률·앵커 문항의 공식통계 대비 오차를 매 발표에 싣는다.</li>
+        <li><b>외부 자문.</b> 통계학·경제학·조사방법론 3인 이상의 자문위원 명단을 공개하고, 산식 변경은 자문위 의결을 거친다.</li>
+      </ul>
+    </div>
+    <div class="card"><h4>금지 목록 &mdash; 하지 않는 것</h4>
+      <ul class="plain">
+        <li><b>정치 문항 전면 배제.</b> 정당 지지도·후보 선호는 공직선거법상 선거여론조사로 분류돼 심의위 등록·기준 준수 의무가 붙고, 무엇보다 지표 브랜드를 진영 논쟁에 묶어 나머지 아홉 개를 오염시킨다. 사회 갈등 인식(KTI Q9)까지가 한계선이다.</li>
+        <li><b>개별 종목·코인·금융상품 언급 금지.</b> 자산군 단위로만 묻고 공표한다(자본시장법 투자권유 회피).</li>
+        <li><b>의약품 효능·안전성 문항 금지.</b> 성분군 표기, 사용·비용·경로만 조사(의료법·약사법).</li>
+        <li><b>유도 문항·극단 선택지 금지.</b> 보도용으로 센 답을 유도하는 순간 재현 불가능한 숫자가 된다.</li>
+        <li><b>단일 문항 헤드라인 금지.</b> 모든 대표 숫자는 합성지수이거나 격차값이다.</li>
+        <li><b>후원사 순위 판매 금지.</b> 조사 대상 업권으로부터 광고·후원을 받지 않는다.</li>
+        <li><b>과잉 분해 금지.</b> 가중 전 실제 응답자가 <span class="mono">30명</span> 미만인 셀은 어떤 크로스탭에서도 공표하지 않는다(재식별 방지 · k-익명성).</li>
+        <li><b>발표 건너뛰기 금지.</b> 한 번이라도 거르면 지표가 아니라 캠페인이다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout warn">
+    <h4>민감정보 취급</h4>
+    <p>DVI(범죄 피해)와 HAI(건강·정신건강)는 개인정보보호법상 민감정보에 해당한다. ① 모듈 진입 전 <b>별도 동의</b>를 받고 ② 언제든 중단 가능함을 고지하며 ③ 수집 즉시 가명처리하고 응답자 식별키와 분리 보관하고 ④ 원자료 공개 시 시도&times;성&times;연령&times;직업 4중 교차는 제공하지 않는다. 이 절차를 방법론서 첫 장에 두는 것이 공공기관 인용의 사실상 전제 조건이다.</p>
+  </div>
+</section>
+
+<section id="road">
+  <h2><span class="n">07 &mdash; 실행</span>첫 12개월 &mdash; 지표는 &lsquo;쌓은 뒤&rsquo; 공개한다</h2>
+  <div class="col sec-intro stack">
+    <p>가장 흔한 실패는 첫 웨이브를 곧바로 발표하는 것이다. 전월 대비가 없는 지수는 그냥 백분율이고, 언론은 한 번 쓰고 잊는다. <b>6웨이브를 비공개로 쌓은 뒤 3개월치를 한꺼번에 공개</b>하면 데뷔 순간부터 &ldquo;3개월 연속 하락&rdquo;이라는 문장이 가능해진다. 이 6개월의 인내가 향후 10년의 인용 지위를 결정한다.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <caption>비용은 온라인 패널 완료응답 단가 1,500&ndash;3,500원(30문항 기준)을 <b>가정</b>한 개략치로, 패널 조달 조건에 따라 크게 달라진다.</caption>
+      <thead><tr><th class="num">시기</th><th>할 일</th><th>산출물</th><th class="num">누적 표본</th></tr></thead>
+      <tbody>
+        <tr><td class="num">M0&ndash;M1</td><td>문항 확정 · 자문위 구성 · 가중치 설계 · 사전등록 페이지 공개</td><td>방법론서 v1.0, 공개 규약</td><td class="num">&mdash;</td></tr>
+        <tr><td class="num">M1</td><td>파일럿 조사 &mdash; 문항 이해도, 이탈 지점, 소요 시간, 앵커 문항 정확도 측정</td><td>파일럿 리포트(대외 공개)</td><td class="num">1,000</td></tr>
+        <tr><td class="num">M2&ndash;M7</td><td><span class="code">CFA·KQI·PRI·ARI</span> 6웨이브 <b>비공개</b> 축적 · 기준시점(=100) 산정</td><td>내부 시계열, 계절성 초기 추정</td><td class="num">60,000</td></tr>
+        <tr><td class="num">M8</td><td>3개월치 동시 공개 &mdash; 데뷔 첫날부터 추세선이 존재하게 만든다</td><td>월간 4종 정식 발표 개시</td><td class="num">70,000</td></tr>
+        <tr><td class="num">M9&ndash;M12</td><td><span class="code">AWP·DVI</span> 진입 · 마이크로데이터 1차 공개 · 언론 1곳과 독점 아닌 <b>동시 공개</b> 협약</td><td>분기 2종 발표, 원자료 포털</td><td class="num">110,000</td></tr>
+        <tr><td class="num">2년차</td><td><span class="code">HMI·LDI·HAI·KTI</span> 순차 진입 · 유료 크로스탭 구독 개시 · 계절조정 계수 확정(24웨이브 확보)</td><td>10종 전면 가동, 계절조정 시계열</td><td class="num">230,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card"><h4>수익은 헤드라인이 아니라 그 아래층에서</h4><p>헤드라인 지수와 전국 표는 <b>영구 무료</b>로 푼다&mdash;인용 횟수가 곧 자산이다. 돈은 세 층에서 나온다. ① 시도&times;세대&times;소득 <b>크로스탭 구독</b>(업권별 연간 계약) ② 마이크로데이터 즉시 접근권(6개월 대기 면제) ③ <b>신디케이트 문항</b>&mdash;기업이 웨이브에 자기 문항 2&ndash;3개를 얹고 1만 명 인구대표 결과를 받는 방식. 컨슈머인사이트와 오픈서베이가 각각 통신·소비재에서 증명한 모델이고, 우리는 여기에 <b>공개 시계열</b>이라는 무기를 더한다.</p></div>
+    <div class="card"><h4>첫 세 개만 제대로 하면 나머지는 따라온다</h4><p>열 개를 동시에 띄우려는 유혹이 가장 큰 위험이다. <span class="code">CFA</span>(가계 압박)·<span class="code">KQI</span>(노동)·<span class="code">PRI</span>(가격)&mdash;이 셋은 서로 다른 업권을 겨냥하면서 같은 웨이브에 실린다. 셋 다 &lsquo;금융·고용·물가&rsquo;라는, 매달 기사가 나가야만 하는 영역이라 언론의 상시 수요가 보장된다. 여기서 인용 지위를 얻으면 <span class="code">DVI</span>·<span class="code">LDI</span>처럼 파급력은 크지만 신뢰 자본이 필요한 지표를 뒤에 얹을 수 있다. 순서를 뒤집으면 &lsquo;자극적인 조사 하는 곳&rsquo;으로 분류되고 되돌리기 어렵다.</p></div>
+  </div>
+</section>
+
+<footer>
+  <h4>참고 자료</h4>
+  <ol>
+    <li><a href="https://www.bok.or.kr/portal/bbs/B0000501/view.do?menuNo=201264&amp;nttId=10094703">한국은행, 소비자동향조사 결과</a> &mdash; 전국 도시 2,500가구, CCSI 6개 CSI 합성, 2005년 1분기부터 작성</li>
+    <li><a href="https://en.wikipedia.org/wiki/University_of_Michigan_Consumer_Sentiment_Index">University of Michigan Consumer Sentiment Index</a> &mdash; 월 약 500건 전화조사로 미 상무부 경기선행지수에 편입</li>
+    <li><a href="https://mods.go.kr/statDesc.es?act=view&amp;mid=a10501010000&amp;sttr_cd=S003003">가계금융복지조사</a> &mdash; 연 1회, 자산·부채 기준일 3월 31일, 소득·지출은 전년도</li>
+    <li><a href="https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=17294">고용노동부, 사업체노동력조사</a> &mdash; 월간 입·이직률, 사업체 관점 실현치</li>
+    <li><a href="https://en.wikipedia.org/wiki/JOLTS_report">JOLTS 자발적 이직률(quits)</a> &mdash; 노동시장 긴장도의 노동자측 선행지표</li>
+    <li><a href="https://www.fnnews.com/news/202607021822011420">온라인 사기 신고율 27%</a> · <a href="https://nsp.nanet.go.kr/plan/subject/detail.do?nationalPlanControlNo=PLAN0000045188">보이스피싱 피해현황 분석</a> &mdash; 공식 통계의 암수 문제</li>
+    <li><a href="https://www.betterfuture.go.kr/front/policySpace/publicReleaseDetail.do?articleId=129">저출산고령사회위원회 결혼·출산·양육 인식조사</a> &mdash; 25&ndash;49세 2,500명, 성·연령·17개 시도 비례 표집</li>
+    <li><a href="https://www.kisdi.re.kr/report/fileView.do?key=m2101113025790&amp;arrMasterId=4333447&amp;id=1938416">KISDI, 생성형 AI 이용 격차</a> · <a href="https://eiec.kdi.re.kr/policy/domesticView.do?ac=0000157466">주요 산업별 AI 도입 현황</a> &mdash; 기업·경영진 관점 조사의 한계</li>
+    <li><a href="https://www.anthropic.com/research/economic-index-june-2026-report">Anthropic Economic Index</a> &mdash; 서비스 로그 기반 AI 사용 측정, 자기선택 표본의 구조적 제약</li>
+    <li><a href="https://www.edelman.com/sites/g/files/aatuss191/files/2025-01/2025%20Edelman%20Trust%20Barometer_Final.pdf">Edelman Trust Barometer 2025</a> &mdash; 28개국 33,194명, 국가당 1,150&ndash;2,124명</li>
+    <li><a href="https://image.shinhan.com/rib2017/img/news/notice_20240417.pdf">신한은행 보통사람 금융생활 보고서</a> &mdash; 20&ndash;64세 경제활동자 1만 명, 성·연령·지역·직업 층화</li>
+    <li><a href="https://www.consumerinsight.co.kr/voc_list_ict.aspx">컨슈머인사이트 이동통신 기획조사</a> &mdash; 연 2회 약 3만 명, 민간 신디케이트 조사 모델</li>
+    <li><a href="https://www.pewresearch.org/methods/2018/01/26/how-different-weighting-methods-work/">Pew Research, How different weighting methods work</a> &mdash; 레이킹(반복비례적합)의 표준적 위치와 한계</li>
+    <li><a href="https://www.law.go.kr/LSW//lsLawLinkInfo.do?lsJoLnkSeq=900418770&amp;chrClsCd=010202&amp;lsId=001725&amp;print=print">공직선거법 제108조</a> · <a href="https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1147&amp;bcIdx=17216">선거여론조사 공표·보도 유의사항</a> &mdash; 정치 문항 배제의 법적 근거</li>
+    <li><a href="https://www.khan.co.kr/article/202608171101001/">비만치료제 처방 현황</a> &mdash; 처방 건수 통계는 있으나 인구 기준 사용률은 부재</li>
+  </ol>
+  <p style="margin-top:22px">설계안 · 2026년 8월 · 문항과 산식은 파일럿 결과에 따라 확정 전 1회 개정을 전제로 한다.</p>
+</footer>
+</div>
