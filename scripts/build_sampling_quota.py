@@ -34,8 +34,20 @@
   전국 성연령 합계가 목표치에서 20명 이상 밀린다. 위 절차는 두 왜곡을
   모두 없애면서, 소규모 지역의 연령 구성도 그 지역 실제 구성비를 따르게 한다.
 
+연령 기준 시나리오 (--schemes 로 선택, 기본은 전부)
+  age14plus : 만 14세 이상 / 14-19세, 20대~60대, 70세 이상      (7구간)
+  all_ages  : 전 연령       / 0-9세, 10대~70대, 80세 이상        (9구간)
+  adults    : 만 20세 이상  / 20대~60대, 70세 이상               (6구간)
+
+  원자료가 5세 단위이므로 만 14세는 밴드 경계와 맞지 않는다. '10-14세' 밴드
+  안에서 균등분포를 가정하고 1/5을 만 14세 인구로 잡는다(지역 x 성별로 반올림).
+  실제로는 출생아 수 감소 때문에 밴드 안에서 만 14세가 만 10세보다 조금 많아
+  참값은 1/5보다 근소하게 크지만, 전체 모집단에서 차지하는 비중 차이는
+  0.1%p 미만이라 배분 결과에는 사실상 영향이 없다.
+
 사용법
   python3 scripts/build_sampling_quota.py [-n 10000] [--outdir data/sampling]
+  python3 scripts/build_sampling_quota.py --schemes age14plus
 """
 
 from __future__ import annotations
@@ -54,8 +66,24 @@ DEFAULT_OUT = os.path.join(ROOT, "data", "sampling")
 # 원본 5세 단위 연령대 인덱스: 0='0-4', 1='5-9', ... 20='100+'
 BAND_YEARS = 5
 
-# 시나리오별 연령 그룹 정의: (그룹명, 포함할 5세 밴드 인덱스)
-SCHEMES = {
+# 시나리오별 연령 그룹 정의: (그룹명, 밴드 명세)
+#   밴드 명세는 5세 밴드 인덱스의 리스트이며, 밴드 일부만 쓸 때는
+#   (인덱스, 가중치) 튜플로 적는다. 예) (2, 0.2) = '10-14세' 밴드의 1/5 = 만 14세
+SCHEMES = OrderedDict()
+SCHEMES["age14plus"] = {
+    "label": "만 14세 이상",
+    "note": "만 14세 인구는 '10-14세' 밴드의 1/5로 추정",
+    "groups": [
+        ("14-19세", [(2, 0.2), 3]),
+        ("20대", [4, 5]),
+        ("30대", [6, 7]),
+        ("40대", [8, 9]),
+        ("50대", [10, 11]),
+        ("60대", [12, 13]),
+        ("70세 이상", [14, 15, 16, 17, 18, 19, 20]),
+    ],
+}
+SCHEMES.update({
     "all_ages": {
         "label": "전 연령(0세 이상)",
         "groups": [
@@ -81,7 +109,7 @@ SCHEMES = {
             ("70세 이상", [14, 15, 16, 17, 18, 19, 20]),
         ],
     },
-}
+})
 
 SEXES = [("남성", "m"), ("여성", "f")]
 
@@ -156,8 +184,11 @@ def cell_populations(base, scheme):
     for r in base:
         for sex_label, key in SEXES:
             bands = r[key]
-            for group_label, idxs in scheme["groups"]:
-                pop = sum(bands[i] for i in idxs)
+            for group_label, spec in scheme["groups"]:
+                pop = int(round(sum(
+                    bands[i] * w for i, w in
+                    ((b if isinstance(b, tuple) else (b, 1.0)) for b in spec)
+                )))
                 cells.append(
                     {
                         "code": r["code"],
@@ -389,6 +420,8 @@ def main():
     ap.add_argument("-n", "--size", type=int, default=10000, help="총 표본 수 (기본 10000)")
     ap.add_argument("--src", default=DEFAULT_SRC, help="주민등록 인구 JSON 경로")
     ap.add_argument("--outdir", default=DEFAULT_OUT, help="CSV 출력 디렉터리")
+    ap.add_argument("--schemes", nargs="+", choices=list(SCHEMES), default=list(SCHEMES),
+                    help="생성할 연령 기준 시나리오 (기본: 전부)")
     args = ap.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)
@@ -403,7 +436,7 @@ def main():
     print("검증      : 229개 지역 합계 = 시도 합계 = 전국 합계 (성/5세연령 전 셀 일치)")
 
     summaries = {}
-    for key in ("all_ages", "adults"):
+    for key in args.schemes:
         s = build(key, base, args.size, args.outdir, meta)
         summaries[key] = s
         print()
@@ -415,8 +448,13 @@ def main():
         for row in s["sido_rows"]:
             print("    %-10s %6.3f%%  %5d명" % (row[0], row[3], row[4]))
 
-    with open(os.path.join(args.outdir, "summary_n%d.json" % args.size), "w", encoding="utf-8") as fp:
-        json.dump(
+    summary_path = os.path.join(args.outdir, "summary_n%d.json" % args.size)
+    merged = {}
+    if os.path.exists(summary_path):
+        with open(summary_path, encoding="utf-8") as fp:
+            merged = json.load(fp)
+    with open(summary_path, "w", encoding="utf-8") as fp:
+        merged.update(
             {
                 k: {
                     "label": v["label"], "n": v["n"], "total_pop": v["total_pop"],
@@ -430,9 +468,10 @@ def main():
                     "region_rows": v["wide_rows"],
                 }
                 for k, v in summaries.items()
-            },
-            fp, ensure_ascii=False,
+            }
         )
+        json.dump(OrderedDict((k, merged[k]) for k in SCHEMES if k in merged),
+                  fp, ensure_ascii=False)
     print("\nCSV 출력 완료 -> %s" % args.outdir)
 
 
