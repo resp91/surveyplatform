@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intranet-bot"
+version = "0.1.0"
+description = "인트라넷 로그인/클릭/엑셀 입력을 시나리오 파일로 자동화하는 도구"
+requires-python = ">=3.10"
+dependencies = [
+    "playwright>=1.44",
+    "openpyxl>=3.1",
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+intranet-bot = "intranet_bot.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

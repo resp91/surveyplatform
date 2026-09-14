@@ -1,0 +1,134 @@
+# ============================================================================
+# 인트라넷 자동화 시나리오 예시
+#   이 파일을 scenario.yaml 로 복사한 뒤, 회사 화면에 맞게 주소와 선택자만
+#   바꾸면 됩니다. 선택자를 모를 때는 아래 명령으로 직접 클릭해 확인하세요.
+#     python -m intranet_bot record https://intranet.example.co.kr
+# ============================================================================
+
+name: "일일 실적 등록"
+
+# 아래의 모든 상대경로가 기준으로 삼을 폴더 (이 파일 위치 기준).
+# 시나리오가 config/ 안에 있고 data/, output/ 이 그 상위에 있으므로 ".." 로 둡니다.
+base_dir: ".."
+
+browser:
+  channel: msedge            # 사내 표준이 크롬이면 chrome, 없으면 이 줄을 지우세요
+  headless: false            # 처음에는 창을 띄워 눈으로 확인하는 것을 권장
+  slow_mo_ms: 150            # 각 동작 사이 지연(ms). 느린 사내망에서 안정적입니다
+  ignore_https_errors: true  # 사내 사설 인증서 경고 무시
+  viewport: { width: 1440, height: 900 }
+  storage_state: "./output/session.json"   # 로그인 세션 저장/재사용
+
+defaults:
+  timeout_ms: 15000          # 요소를 기다리는 기본 시간
+
+run:
+  on_error: stop             # stop: 첫 실패에서 멈춤 / continue: 다음 행 계속
+  screenshot_on_error: true  # 실패 시 화면과 HTML 을 output/errors 에 저장
+  output_dir: "./output"
+  checkpoint_file: "./output/checkpoint.json"
+  delay_between_rows_ms: 500
+
+# 시나리오 안에서 {{ var.부서 }} 로 쓸 수 있는 고정값
+vars:
+  부서: "영업1팀"
+
+# ------------------------------------------------------------------ 로그인
+# 아이디/비밀번호는 이 파일에 적지 말고 config/.env 에 넣습니다.
+login:
+  url: "https://intranet.example.co.kr/login"
+  success_selector: "#gnb"   # 로그인 성공 시에만 보이는 요소
+  steps:
+    - action: fill
+      selector: "#userId"
+      value: "{{ secret.INTRANET_ID }}"
+      label: "아이디 입력"
+    - action: fill
+      selector: "#userPw"
+      value: "{{ secret.INTRANET_PW }}"
+      label: "비밀번호 입력"
+    - action: click
+      selector: "button[type=submit]"
+      label: "로그인 버튼"
+    - action: click
+      selector: "#popup-close"
+      optional: true          # 공지 팝업이 없을 수도 있으므로 실패해도 넘어감
+      label: "공지 팝업 닫기"
+
+# -------------------------------------------------------------------- 엑셀
+excel:
+  path: "./data/샘플데이터.xlsx"          # 우선 동봉된 샘플로 모의 실행해 보세요
+  sheet: "Sheet1"
+  header_row: 1              # 머리글이 있는 행
+  start_row: 2               # 실제 데이터가 시작되는 행
+  end_row: null              # null 이면 끝까지
+  columns:                   # 엑셀 머리글 이름 -> 시나리오에서 쓸 변수명
+    거래처명: partner
+    계약일자: contract_date
+    금액: amount
+    비고: note
+
+# -------------------------------------------------------------------- 흐름
+flow:
+  # 로그인 직후 한 번만 실행
+  setup:
+    - action: handle_dialog
+      accept: true
+      label: "확인창 자동 확인 설정"
+    - action: goto
+      url: "https://intranet.example.co.kr/sales/report"
+      label: "실적 등록 화면 이동"
+
+  # 엑셀의 각 행마다 반복 실행
+  per_row:
+    - action: click
+      selector: "#btn-new"
+      label: "신규 등록 버튼"
+
+    - action: switch_frame
+      selector: "iframe#contentFrame"
+      label: "입력 프레임으로 전환"
+
+    - action: fill
+      selector: "#partnerName"
+      value: "{{ row.partner }}"
+      label: "거래처명"
+
+    - action: fill
+      selector: "#contractDate"
+      value: "{{ row.contract_date }}"
+      label: "계약일자"
+
+    - action: type
+      selector: "#amount"
+      value: "{{ row.amount }}"
+      delay_ms: 30
+      label: "금액 (자동 천단위 구분 대응)"
+
+    - action: select_option
+      selector: "#deptCode"
+      option_label: "{{ var.부서 }}"   # 화면에 보이는 글자로 선택 (value: 로 코드값 지정도 가능)
+      label: "부서 선택"
+
+    - action: fill
+      selector: "#note"
+      value: "{{ row.note }}"
+      skip_if_empty: "row.note"   # 비고가 비어 있으면 이 단계를 건너뜀
+      label: "비고"
+
+    - action: click
+      selector: "#btn-save"
+      label: "저장"
+
+    - action: wait_for_text
+      text: "저장되었습니다"
+      label: "저장 완료 확인"
+
+    - action: switch_frame        # 인자 없이 쓰면 최상위 문서로 복귀
+      label: "프레임 복귀"
+
+  # 모든 행 처리 후 한 번 실행
+  teardown:
+    - action: screenshot
+      path: "완료화면.png"
+      label: "최종 화면 저장"

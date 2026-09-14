@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>가짜 인트라넷 - 로그인</title>
+<h1>사내 포털 로그인</h1>
+<form id="loginForm">
+  <label>아이디 <input id="userId" name="userId"></label>
+  <label>비밀번호 <input id="userPw" name="userPw" type="password"></label>
+  <button type="submit">로그인</button>
+</form>
+<p id="error" hidden>아이디 또는 비밀번호가 올바르지 않습니다.</p>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const id = document.getElementById('userId').value;
+    const pw = document.getElementById('userPw').value;
+    if (id === 'hong' && pw === 'secret1234') {
+      sessionStorage.setItem('loggedIn', '1');
+      location.href = 'main.html';
+    } else {
+      document.getElementById('error').hidden = false;
+    }
+  });
+</script>

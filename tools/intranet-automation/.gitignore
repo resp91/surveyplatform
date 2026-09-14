@@ -1,0 +1,10 @@
+# 비밀값과 실행 산출물은 저장소에 올리지 않는다.
+config/.env
+output/
+data/*.xlsx
+data/*.xls
+data/*.csv
+!data/샘플데이터.xlsx
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>입력 프레임</title>
+<label>거래처명 <input id="partnerName"></label>
+<label>금액 <input id="amount"></label>
+<label>부서
+  <select id="deptCode">
+    <option value="">선택</option>
+    <option value="S1">영업1팀</option>
+    <option value="S2">영업2팀</option>
+  </select>
+</label>
+<label>비고 <input id="note"></label>
+<button id="btn-save">저장</button>
+<p id="message"></p>
+<script>
+  document.getElementById('btn-save').addEventListener('click', () => {
+    const record = {
+      partner: document.getElementById('partnerName').value,
+      amount: document.getElementById('amount').value,
+      dept: document.getElementById('deptCode').value,
+      note: document.getElementById('note').value,
+    };
+    if (!record.partner) {
+      document.getElementById('message').textContent = '거래처명은 필수입니다.';
+      return;
+    }
+    const saved = JSON.parse(localStorage.getItem('records') || '[]');
+    saved.push(record);
+    localStorage.setItem('records', JSON.stringify(saved));
+    document.getElementById('message').textContent = '저장되었습니다';
+  });
+</script>
